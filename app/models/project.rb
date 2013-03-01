@@ -1,3 +1,9 @@
 class Project < ActiveRecord::Base
-  # attr_accessible :title, :body
+
+	# attributes
+	attr_accessible :name, :description, :manager, :bmonth, :byear, :emonth, :eyear
+
+  # model hooks
+  has_and_belongs_to_many :users, joint_table: :users_projects
+
 end

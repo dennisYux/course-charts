@@ -2,7 +2,7 @@ class Task < ActiveRecord::Base
   # attr_accessible :title, :body
 
   # attributes
-  attr_accessible :name, :due_at
+  attr_accessible :name
 
   # model hooks
   has_many :records, dependent: :destroy

@@ -6,8 +6,9 @@ describe Record do
     @attr = {
       user_name: "Example User",
       description: "Task 1 model",
-      hours: 2.5,
-      created_at: Time.now.to_datetime
+      hours: 2.5
+      
+      # created_at: Time.now.to_datetime
     }
   end
   

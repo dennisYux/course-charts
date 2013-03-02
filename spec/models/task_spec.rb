@@ -4,9 +4,11 @@ describe Task do
 
   before(:each) do
     @attr = {
-      name: "Task 1",
-      due_at: Time.next_month.to_datetime
-      created_at: Time.now.to_datetime
+      name: "Task 1"
+      
+      # due_at: Time.next_month.to_datetime
+      # created_at: Time.now.to_datetime
+      # done_at: Time.now.to_datetime
     }
   end
   

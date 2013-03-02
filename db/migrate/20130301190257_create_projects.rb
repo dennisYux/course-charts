@@ -5,10 +5,9 @@ class CreateProjects < ActiveRecord::Migration
     	t.string :description
     	t.string :manager
 
-    	t.string :fmonth
-    	t.string :fyear
-    	t.string :tmonth
-    	t.string :tyear    	
+    	t.datetime :due_at
+    	t.datetime :created_at
+    	t.datetime :done_at   	
 
       t.timestamps
     end

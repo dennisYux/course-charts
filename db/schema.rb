@@ -15,12 +15,9 @@ ActiveRecord::Schema.define(:version => 20130301205518) do
 
   create_table "projects", :force => true do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.string   "manager"
-    t.string   "fmonth"
-    t.string   "fyear"
-    t.string   "tmonth"
-    t.string   "tyear"
+    t.datetime "due_at"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end

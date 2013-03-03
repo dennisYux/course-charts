@@ -2,12 +2,12 @@ class CreateProjects < ActiveRecord::Migration
   def change
     create_table(:projects) do |t|
     	t.string :name
-    	t.string :description
+    	t.text   :description
     	t.string :manager
 
     	t.datetime :due_at
-    	t.datetime :created_at
-    	t.datetime :done_at   	
+    	# t.datetime :created_at
+    	# t.datetime :done_at   	
 
       t.timestamps
     end

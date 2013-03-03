@@ -3,8 +3,8 @@ class CreateTasks < ActiveRecord::Migration
     create_table :tasks do |t|
     	t.string :name
     	t.datetime :due_at
-    	t.datetime :created_at
-    	t.datetime :done_at
+    	# t.datetime :created_at
+    	# t.datetime :done_at
 
       t.timestamps
     end

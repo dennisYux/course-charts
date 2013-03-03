@@ -24,7 +24,12 @@ describe ProjectsController do
   # Project. As you add validations to Project, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {  }
+    { 
+      name: "Example Project",
+      description: "This is an example project",
+      manager: "Leader",
+      due: "03-31-2013"
+    }
   end
 
   # This should return the minimal set of values that should be in the session

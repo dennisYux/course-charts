@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :name
 
   # model hooks
-  has_and_belongs_to_many :projects
+  has_many :contracts
+  has_many :projects, through: :contracts
   
 end

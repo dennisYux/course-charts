@@ -10,8 +10,9 @@ class Project < ActiveRecord::Base
   validate :dates_format
 
   # model hooks
-  has_and_belongs_to_many :users, join_table: :users_projects
-  has_many :tasks
+  has_many :contracts
+  has_many :users, through: :contracts
+  has_many :tasks, dependent: :destroy
   has_many :records, through: :tasks
 
   # callbacks

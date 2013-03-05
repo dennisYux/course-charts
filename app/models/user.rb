@@ -15,7 +15,10 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :name
 
   # model hooks
-  has_many :contracts
+  # user should not be destroied
+  has_many :contracts, dependent: :destroy
   has_many :projects, through: :contracts
+  has_many :records, dependent: :destroy
+  has_many :tasks, through: :records
   
 end

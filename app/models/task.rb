@@ -9,8 +9,10 @@ class Task < ActiveRecord::Base
   # validations
   validate :dates_format
 
-  # model hooks
+  # model hooks  
+  # task should not be destroied
   has_many :records, dependent: :destroy
+  has_many :users, through: :records
   belongs_to :project
 
   # callbacks

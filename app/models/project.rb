@@ -10,7 +10,8 @@ class Project < ActiveRecord::Base
   validate :dates_format
 
   # model hooks
-  has_many :contracts
+  # project should not be destroied
+  has_many :contracts, dependent: :destroy
   has_many :users, through: :contracts
   has_many :tasks, dependent: :destroy
   has_many :records, through: :tasks

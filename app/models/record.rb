@@ -6,6 +6,7 @@ class Record < ActiveRecord::Base
 
   # model hooks
   belongs_to :task
+  belongs_to :user
 
   def started_at
   	return created_at - hours.hours

@@ -13,7 +13,24 @@ YAML.load(ENV['ROLES']).each do |role|
   puts 'role: ' << role
 end
 puts 'DEFAULT USERS'
-user = User.find_or_create_by_email :name => ENV['ADMIN_NAME'].dup, :email => ENV['ADMIN_EMAIL'].dup, :password => ENV['ADMIN_PASSWORD'].dup, :password_confirmation => ENV['ADMIN_PASSWORD'].dup
-puts 'user: ' << user.name
-user.confirm!
-user.add_role :admin
+#user = User.find_or_create_by_email :name => ENV['ADMIN_NAME'].dup, :email => ENV['ADMIN_EMAIL'].dup, :password => ENV['ADMIN_PASSWORD'].dup, :password_confirmation => ENV['ADMIN_PASSWORD'].dup
+#puts 'user: ' << user.name
+#user.confirm!
+#user.add_role :admin
+users = [{name: 'Jack', email: 'jack@example.com', password: '12345678', password_confirmation: '12345678'},
+{name: 'Rose', email: 'rose@example.com', password: '12345678', password_confirmation: '12345678'}]
+users.each do |u|
+	user = User.find_or_create_by_name name: u[:name], email: u[:email], password: u[:password],
+	password_confirmation: u[:password_confirmation]
+	puts 'user: ' << user.name
+	user.confirm!
+end
+
+puts 'DEFAULT PROJECTS'
+project = Project.find_or_create_by_name name: 'CSI5111 Course Project', 
+description: 'Investigate different testing techniques', manager: 'Jack', due: '03-05-2013'
+puts 'project ' << project.name
+#tasks = [{name: 'Task 1', due: '02-10-2013'},	{name: 'Task 2', due: '03-03-2013'}]
+#tasks.each do |t|
+#	task = 
+#end

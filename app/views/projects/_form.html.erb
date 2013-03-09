@@ -2,6 +2,10 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
+  <%= f.input :name, autofocus: true, required: true %>
+  <%= f.input :description, input_html: {rows: "6"}, required: false %>
+  <%= f.input :manager, required: false %>
+  <%= f.input :due, hint: "MM-DD-YYYY", required: true %>
   </div>
 
   <div class="form-actions">

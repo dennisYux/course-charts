@@ -1,4 +1,17 @@
 <h3>User</h3>
 <p>User: <%= @user.name %></p>
 <p>Email: <%= @user.email if @user.email %></p>
-<div id="chart_div" style="width: 900px; height: 500px;"></div>
+<h3>Project</h3>
+<%= link_to 'New Project', new_account_project_path %>
+<table class="table table-condensed">
+	<% @projects.in_groups_of(2).each do |project_array| %>
+		<tr>
+		<% project_array.each do |project| %>
+		<td>
+		  <tr><%= link_to project.name, account_project_path(project) %></tr>
+		  <tr><%= project.description %></tr>	
+		</td>
+		<% end %>
+		</tr>
+	<% end %>
+</table>

@@ -1,11 +1,27 @@
 Boarder::Application.routes.draw do
-  resources :projects
-
 
   authenticated :user do
     root :to => 'home#index'
   end
   root :to => "home#index"
-  devise_for :users
-  resources :users
+
+  # 
+  # once a user has successfully signed in
+  # a redirection from routes /users to /account happens
+  #   
+  devise_for :users, skip: [:registrations] do
+    get    '/users/sign_up(.:format)', to: 'devise::registrations#new',    as: :new_user_registration
+    post   '/users(.:format)',         to: 'devise::registrations#create', as: :user_registration
+    get    '/account/edit(.:format)',  to: 'devise::registrations#edit',   as: :edit_account
+    put    '/account(.:format)',       to: 'devise::registrations#update', as: :account
+    get    '/users/cancel(.:format)',  to: 'devise::registrations#cancel', as: :cancel_user_registration
+		delete '/users(.:format)',         to: 'devise::registrations#destroy'	
+	end
+
+  get '/admin(.:format)', to: 'users#index', as: :admin  
+  get '/account(.:format)', to: 'users#show'
+
+  scope 'account', as: 'account' do
+  	resources :projects
+  end
 end

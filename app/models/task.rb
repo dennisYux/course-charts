@@ -4,7 +4,7 @@ class Task < ActiveRecord::Base
 
   # attributes
   attr_accessor :due
-  attr_accessible :name, :due
+  attr_accessible :name, :tag, :due
 
   # validations
   validate :dates_format

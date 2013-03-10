@@ -21,7 +21,9 @@ Boarder::Application.routes.draw do
   get '/admin(.:format)', to: 'users#index', as: :admin  
   get '/account(.:format)', to: 'users#show'
 
-  scope 'account', as: 'account' do
-  	resources :projects
+  scope 'account' do
+  	resources :projects do
+      resources :tasks
+    end
   end
 end

@@ -25,12 +25,3 @@ users.each do |u|
 	puts 'user: ' << user.name
 	user.confirm!
 end
-
-puts 'DEFAULT PROJECTS'
-project = Project.find_or_create_by_name name: 'CSI5111 Course Project', 
-description: 'Investigate different testing techniques', manager: 'Jack', due: '03-05-2013'
-puts 'project ' << project.name
-#tasks = [{name: 'Task 1', due: '02-10-2013'},	{name: 'Task 2', due: '03-03-2013'}]
-#tasks.each do |t|
-#	task = 
-#end

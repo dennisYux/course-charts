@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(:version => 20130305025241) do
 
   create_table "projects", :force => true do |t|
     t.string   "name"
-    t.text     "description"
+    t.string   "description"
     t.string   "manager"
     t.datetime "due_at"
     t.datetime "created_at",  :null => false
@@ -34,12 +34,15 @@ ActiveRecord::Schema.define(:version => 20130305025241) do
   add_index "projects", ["manager"], :name => "index_projects_on_manager"
 
   create_table "records", :force => true do |t|
-    t.string   "user_name"
-    t.text     "description"
+    t.string   "description"
     t.decimal  "hours",       :precision => 4, :scale => 2
+    t.integer  "user_id"
+    t.integer  "task_id"
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
   end
+
+  add_index "records", ["user_id", "task_id"], :name => "index_records_on_user_id_and_task_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -54,10 +57,14 @@ ActiveRecord::Schema.define(:version => 20130305025241) do
 
   create_table "tasks", :force => true do |t|
     t.string   "name"
+    t.integer  "tag"
     t.datetime "due_at"
+    t.integer  "project_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "tasks", ["project_id", "tag"], :name => "index_tasks_on_project_id_and_tag"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

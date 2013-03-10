@@ -42,7 +42,7 @@ class Project < ActiveRecord::Base
   private
 
   def dates_format
-  	errors.add(:project, "should have dates in the format of 'MM-DD'") unless valid_dates?
+  	errors.add(:project, "should have dates in the format of 'MM-DD-YYYY'") unless valid_dates?
   end
 
   def valid_dates?
@@ -60,5 +60,6 @@ class Project < ActiveRecord::Base
   def fill_due_at
   	self.due_at = due.datestr_to_datetime
   end
+
 
 end

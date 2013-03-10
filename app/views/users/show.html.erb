@@ -2,13 +2,13 @@
 <p>User: <%= @user.name %></p>
 <p>Email: <%= @user.email if @user.email %></p>
 <h3>Project</h3>
-<%= link_to 'New Project', new_account_project_path %>
+<%= link_to 'New Project', new_project_path %>
 <table class="table table-condensed">
-	<% @projects.in_groups_of(2).each do |project_array| %>
+	<% @projects.in_groups_of(2, false).each do |project_array| %>
 		<tr>
 		<% project_array.each do |project| %>
 		<td>
-		  <tr><%= link_to project.name, account_project_path(project) %></tr>
+		  <tr><%= link_to project.name, project %></tr>
 		  <tr><%= project.description %></tr>	
 		</td>
 		<% end %>

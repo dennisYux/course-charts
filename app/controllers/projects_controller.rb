@@ -1,83 +1,138 @@
 class ProjectsController < ApplicationController
+
   # GET /projects
-  # GET /projects.json
   def index
     @projects = Project.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @projects }
-    end
   end
 
   # GET /projects/1
-  # GET /projects/1.json
   def show
     @project = Project.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @project }
-    end
   end
 
   # GET /projects/new
-  # GET /projects/new.json
   def new
     @project = Project.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @project }
-    end
+    @tasks = [Task.new, Task.new]
   end
 
   # GET /projects/1/edit
   def edit
     @project = Project.find(params[:id])
+    @tasks = @project.tasks.empty? ? [Task.new] : @project.tasks
   end
 
   # POST /projects
-  # POST /projects.json
   def create
-    @project = Project.new(params[:project])
-
-    respond_to do |format|
-      if @project.save
-        format.html { redirect_to @project, notice: 'Project was successfully created.' }
-        format.json { render json: @project, status: :created, location: @project }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
+    separate_params
+    @project = Project.new(@project_params)
+    if project_saved?
+      redirect_to @project, notice: "Project was successfully created."
+    else
+      prepare_params_for_view 
+      render action: 'new'
     end
   end
 
   # PUT /projects/1
-  # PUT /projects/1.json
   def update
+    separate_params
     @project = Project.find(params[:id])
-
-    respond_to do |format|
-      if @project.update_attributes(params[:project])
-        format.html { redirect_to @project, notice: 'Project was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
+    if project_updated?
+      redirect_to @project, notice: 'Project was successfully updated.'
+    else
+      prepare_params_for_view
+      render action: 'edit'
     end
   end
 
   # DELETE /projects/1
-  # DELETE /projects/1.json
   def destroy
     @project = Project.find(params[:id])
     @project.destroy
+    redirect_to projects_url, notice: 'Project was successfully deleted.'
+  end
 
-    respond_to do |format|
-      format.html { redirect_to projects_url }
-      format.json { head :no_content }
+  private
+  
+  #
+  # categorize params
+  #
+  def separate_params
+    @project_params = params[:project]
+    @tasks_params = @project_params.delete(:task)
+  end
+
+  #
+  # true if the project and all tasks are saved
+  # false otherwise
+  #
+  def project_saved?
+    begin  
+      @project.transaction do  
+        save_project!
+        save_tasks!
+      end
+      return true  
+    rescue Exception => e
+      return false
+    end 
+  end
+
+  def save_project!     
+    @project.save!
+    @project.contracts.create!(user_id: current_user.id)
+  end
+
+  #
+  # new tasks might need to be created 
+  # in both save and update cases
+  #
+  def update_tasks!    
+    @tasks_params.each_index do |i|
+      tasks = Task.where("project_id=#{@project.id} and tag=#{i}")
+      task_params = @tasks_params[i].merge(tag: i)
+      if tasks.empty?        
+        @project.tasks.create!(task_params)
+      else
+        # primary key, only one task expected
+        tasks.first.update_attributes!(task_params)
+      end
     end
   end
+
+  alias :save_tasks! :update_tasks!
+
+  #
+  # true if the project and all tasks are updated
+  # false otherwise
+  #
+  def project_updated?
+    begin  
+      @project.transaction do  
+        update_project!
+        update_tasks!
+      end
+      return true  
+    rescue Exception => e
+      return false
+    end 
+  end
+
+  def update_project!
+    @project.update_attributes!(@project_params)
+  end
+
+  #
+  # fill form with user inputs
+  #
+  def prepare_params_for_view
+    # parameters used when render views 
+    @project = Project.new(@project_params)
+    @tasks = []
+    @tasks_params.each do |task_params|
+      @tasks << Task.new(task_params)
+    end
+  end
+
 end

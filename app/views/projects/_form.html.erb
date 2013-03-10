@@ -1,11 +1,22 @@
-<%= simple_form_for(@project) do |f| %>
+<%= simple_form_for @project do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-  <%= f.input :name, autofocus: true, required: true %>
-  <%= f.input :description, input_html: {rows: "6"}, required: false %>
-  <%= f.input :manager, required: false %>
-  <%= f.input :due, hint: "MM-DD-YYYY", required: true %>
+    <div class = "project-info">
+    <%= f.input :name, autofocus: true, required: true %>
+    <%= f.input :description, as: :string, input_html: {rows: "6"}, required: false %>
+    <%= f.input :manager, required: false %>
+    <%= f.input :due, hint: "MM-DD-YYYY", required: true %>
+    </div>
+
+    <% @tasks.each do |task| %>
+      <%= f.simple_fields_for task, index: nil do |task_f| %>
+      <div class = "task-info">
+      <%= task_f.input :name, autofocus: true %>
+      <%= task_f.input :due, hint: "MM-DD-YYYY" %>
+      </div>      
+      <% end %>
+    <% end %>
   </div>
 
   <div class="form-actions">

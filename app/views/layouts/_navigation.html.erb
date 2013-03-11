@@ -1,12 +1,16 @@
-<%= link_to "Boarder", root_path, :class => 'brand' %>
+<%= link_to "Boarder", root_path, class: 'brand' %>
 <ul class="nav">
+  <li><%= link_to 'About', about_path %></li>
+
+
+
   <% if user_signed_in? %>
     <li>
-    <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
+    <%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %>
     </li>
   <% else %>
     <li>
-    <%= link_to 'Login', new_user_session_path %>
+    <%= link_to 'Sign in', new_user_session_path %>
     </li>
   <% end %>
   <% if user_signed_in? %>

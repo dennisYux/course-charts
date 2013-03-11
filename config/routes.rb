@@ -1,5 +1,7 @@
 Boarder::Application.routes.draw do
 
+  get "about/index"
+
   authenticated :user do
     root :to => 'home#index'
   end

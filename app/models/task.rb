@@ -3,11 +3,9 @@ class Task < ActiveRecord::Base
   require 'utilities'
 
   # attributes
-  attr_accessor :due
-  attr_accessible :name, :tag, :due
+  attr_accessible :name, :tag, :due_at
 
   # validations
-  validate :dates_format
 
   # model hooks  
   # task should not be destroied
@@ -16,7 +14,7 @@ class Task < ActiveRecord::Base
   belongs_to :project
 
   # callbacks
-  before_save :fill_dates
+  before_save :fill_due_at
 
   def started_at
   	# initiate with task due (> start time of target records)
@@ -39,25 +37,9 @@ class Task < ActiveRecord::Base
   end
 
   private
-  
-  def dates_format
-  	errors.add(:task, "should have dates in the format of 'MM-DD'") unless valid_dates?
-  end
-
-  def valid_dates?
-  	valid_due?
-  end
-
-  def valid_due?
-  	due.valid_datestr?
-  end
-
-  def fill_dates
-  	fill_due_at
-  end
 
   def fill_due_at
-  	self.due_at = due.datestr_to_datetime
+  	self.due_at = due_at.end_of_day
   end
 
 end

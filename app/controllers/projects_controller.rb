@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
-    @tasks = [Task.new, Task.new]
+    @tasks = [Task.new]
   end
 
   # GET /projects/1/edit
@@ -61,6 +61,9 @@ class ProjectsController < ApplicationController
   def separate_params
     @project_params = params[:project]
     @tasks_params = @project_params.delete(:task)
+    @tasks_params.each_index do |i|      
+      @tasks_params[i][:tag] = i
+    end
   end
 
   #
@@ -89,9 +92,8 @@ class ProjectsController < ApplicationController
   # in both save and update cases
   #
   def update_tasks!    
-    @tasks_params.each_index do |i|
-      tasks = Task.where("project_id=#{@project.id} and tag=#{i}")
-      task_params = @tasks_params[i].merge(tag: i)
+    @tasks_params.each do |task_params|
+      tasks = Task.where("project_id=#{@project.id} and tag=#{task_params[:tag]}")
       if tasks.empty?        
         @project.tasks.create!(task_params)
       else

@@ -3,17 +3,19 @@
 
   <div class="form-inputs">
     <div class = "project-info">
+    <h1>PROJECT</h1>
     <%= f.input :name, autofocus: true, required: true %>
-    <%= f.input :description, as: :string, input_html: {rows: "6"}, required: false %>
+    <%= f.input :description, required: false %>
     <%= f.input :manager, required: false %>
-    <%= f.input :due, hint: "MM-DD-YYYY", required: true %>
+    <%= f.input :due_at, as: :date, required: true %>
     </div>
 
-    <% @tasks.each do |task| %>
-      <%= f.simple_fields_for task, index: nil do |task_f| %>
+    <% @tasks.each_index do |i| %>
+      <%= f.simple_fields_for 'task[]', @tasks[i], index: nil do |task_f| %>
       <div class = "task-info">
-      <%= task_f.input :name, autofocus: true %>
-      <%= task_f.input :due, hint: "MM-DD-YYYY" %>
+      <h4>TASK #<%= i+1 %></h4>
+      <%= task_f.input :name, required: false %>
+      <%= task_f.input :due_at, as: :date, required: true %>
       </div>      
       <% end %>
     <% end %>

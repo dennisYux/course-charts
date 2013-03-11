@@ -16,3 +16,4 @@ class String
 	end
 
 end
+

@@ -3,11 +3,9 @@ class Project < ActiveRecord::Base
   require 'utilities'
 
 	# attributes
-	attr_accessor :due
-	attr_accessible :name, :description, :manager, :due
+	attr_accessible :name, :description, :manager, :due_at
 
   # validations
-  validate :dates_format
 
   # model hooks
   # project should not be destroied
@@ -17,7 +15,7 @@ class Project < ActiveRecord::Base
   has_many :records, through: :tasks
 
   # callbacks
-  before_save :fill_dates
+  before_save :fill_due_at
 
   def started_at
   	# initiate with project due (> start time of target tasks)
@@ -41,24 +39,8 @@ class Project < ActiveRecord::Base
 
   private
 
-  def dates_format
-  	errors.add(:project, "should have dates in the format of 'MM-DD-YYYY'") unless valid_dates?
-  end
-
-  def valid_dates?
-  	valid_due?
-  end
-
-  def valid_due?
-  	due.valid_datestr?
-  end
-
-  def fill_dates
-  	fill_due_at
-  end
-
   def fill_due_at
-  	self.due_at = due.datestr_to_datetime
+  	self.due_at = due_at.end_of_day
   end
 
 

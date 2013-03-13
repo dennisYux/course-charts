@@ -1,4 +1,6 @@
-<h2>Edit Account</h2>
+<%= render "shared/account_header" %>
+
+<h3>Edit Account</h3>
 
 <%= simple_form_for(resource, as: resource_name, url: account_path, html: { method: :put }) do |f| %>
   <%= f.error_notification %>

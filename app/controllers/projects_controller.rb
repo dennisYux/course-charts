@@ -7,8 +7,10 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
-    @project = Project.find(params[:id])
+    @projects = Project.where("due_at>?", Time.now.weeks_ago(1))
   end
+
+  # GET /
 
   # GET /projects/new
   def new

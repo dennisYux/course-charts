@@ -1,7 +1,5 @@
-<h3>User</h3>
-<p>User: <%= @user.name %></p>
-<p>Email: <%= @user.email if @user.email %></p>
-<h3>Project</h3>
+<%= render "shared/account_header" %>
+<h3>Progress</h3>
 <%= link_to 'New Project', new_project_path %>
 <table class="table table-condensed">
 	<% @projects.in_groups_of(2, false).each do |project_array| %>

@@ -25,17 +25,20 @@ Boarder::Application.routes.draw do
 	end
 
   get '/admin(.:format)', to: 'users#index', as: :admin  
-  get '/account(.:format)', to: 'users#show', as: :user_root
+  #
+  # it is better to define separate controllers ?
+  #
+  get '/account(.:format)', to: 'users#in_progress', as: :user_root
+  get '/account/history(.:format)', to: 'users#history', as: :account_history
+  get '/account/report(.:format)', to: 'users#report', as: :account_report
 
   scope 'account' do
-  	resource :project 
+  	resources :projects 
   end
-
-  get '/account/history(.:format)', to: 'projects#index', as: :history
 
   scope 'data' do
     get '/overview(.:format)', to: 'data#overview'
-    get '/project(.:format)', to: 'data#project'
+    get '/in-progress(.:format)', to: 'data#in_progress'
   end
 
   #get '/about', to: 'about#index', as: :about

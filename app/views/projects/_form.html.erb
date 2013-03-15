@@ -3,7 +3,7 @@
 
   <div class="form-inputs">
     <div class = "project-info">
-    <h1>PROJECT</h1>
+    <h3>Project</h3>
     <%= f.input :name, autofocus: true, required: true %>
     <%= f.input :description, required: false %>
     <%= f.input :manager, required: false %>
@@ -14,6 +14,7 @@
       <%= f.simple_fields_for 'task[]', @tasks[i], index: nil do |task_f| %>
       <div class = "task-info">
       <h4>TASK #<%= i+1 %></h4>
+      <div class='pull-right'><a class='new-task'><i class='icon-plus-sign'></i> New task</a></div>
       <%= task_f.input :name, required: false %>
       <%= task_f.input :due_at, as: :date, required: true %>
       </div>      

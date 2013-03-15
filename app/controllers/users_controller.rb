@@ -6,8 +6,15 @@ class UsersController < ApplicationController
     @users = User.all
   end  
 
-  def show
-  	@user = current_user
-  	@projects = @user.projects
+  def in_progress
+    @projects = Project.where("due_at>=?", Time.now.weeks_ago(1))
+  end
+
+  def history
+    @projects = Project.where("due_at<?", Time.now.weeks_ago(1))
+  end
+
+  def report
+
   end
 end

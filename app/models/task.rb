@@ -23,7 +23,7 @@ class Task < ActiveRecord::Base
   	records.each do |r|
   		start = r.started_at if start > r.started_at
   	end
-  	return start
+  	start
   end
 
   def done_at
@@ -33,7 +33,16 @@ class Task < ActiveRecord::Base
     records.each do |r|
       done = r.done_at if done < r.done_at
     end
-    return done
+    done
+  end
+
+  def hours_used
+    hours = 0
+    records.each do |r|
+      hours += r.hours
+    end   
+    hours 
+    Random.new.rand(1..5)
   end
 
   private

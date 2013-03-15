@@ -1,10 +1,9 @@
 <%= render "shared/account_header" %>
 
-<% @projects.each do |project| %>
-<h3><%= project.name %></h3>
+<% @projects.each_index do |i| %>
+<h3><%= @projects[i].name %></h3>
+<div id=<%= "chartset_"+i.to_s+"_tasks_hours" %> style="width: 900px; height: 500px;"></div>
 <% end %>
 
-<div id="chart_div" style="width: 900px; height: 500px;"></div>
-
 <%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+<%= link_to 'Back', project_path %>

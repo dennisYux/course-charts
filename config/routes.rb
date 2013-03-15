@@ -1,5 +1,9 @@
 Boarder::Application.routes.draw do
 
+  get "data/overview"
+
+  get "data/project"
+
   get "about/index"
 
   authenticated :user do
@@ -28,6 +32,11 @@ Boarder::Application.routes.draw do
   end
 
   get '/account/history(.:format)', to: 'projects#index', as: :history
+
+  scope 'data' do
+    get '/overview(.:format)', to: 'data#overview'
+    get '/project(.:format)', to: 'data#project'
+  end
 
   #get '/about', to: 'about#index', as: :about
 

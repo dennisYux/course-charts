@@ -37,6 +37,14 @@ class Project < ActiveRecord::Base
     return done
   end
 
+  def hours_used
+    hours = 0
+    tasks.each do |t|
+      hours += t.hours_used
+    end   
+    return hours 
+  end
+
   private
 
   def fill_due_at

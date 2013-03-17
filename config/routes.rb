@@ -1,11 +1,5 @@
 Boarder::Application.routes.draw do
 
-  get "data/overview"
-
-  get "data/project"
-
-  get "about/index"
-
   authenticated :user do
     root :to => 'home#index'
   end
@@ -26,7 +20,7 @@ Boarder::Application.routes.draw do
 
   get '/admin(.:format)', to: 'users#index', as: :admin  
   #
-  # it is better to define separate controllers ?
+  # it is better to define separate controllers for in progress, history ... ?
   #
   get '/account(.:format)', to: 'users#in_progress', as: :user_root
   get '/account/history(.:format)', to: 'users#history', as: :account_history

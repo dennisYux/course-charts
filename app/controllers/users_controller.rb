@@ -7,11 +7,19 @@ class UsersController < ApplicationController
   end  
 
   def in_progress
-    @projects = Project.where("due_at>=?", Time.now.weeks_ago(1))
+    @user = current_user
+    @projects = []
+    @user.projects.each do |project|
+      @projects << project if project.due_at >= Time.now.weeks_ago(1)
+    end
   end
 
   def history
-    @projects = Project.where("due_at<?", Time.now.weeks_ago(1))
+    @user = current_user
+    @projects = []
+    @user.projects.each do |project|
+      @projects << project if project.due_at < Time.now.weeks_ago(1)
+    end
   end
 
   def report

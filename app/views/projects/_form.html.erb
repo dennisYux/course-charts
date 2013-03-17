@@ -13,9 +13,9 @@
     <% @tasks.each_index do |i| %>
       <%= f.simple_fields_for 'task[]', @tasks[i], index: nil do |task_f| %>
       <div class = "task-info">
-      <h4>TASK #<%= i+1 %></h4>
-      <div class='pull-right'><a class='new-task'><i class='icon-plus-sign'></i> New task</a></div>
-      <%= task_f.input :name, required: false %>
+      <!--<h3>Task <%= i+1 %></h3>-->
+      <a class='new-task pull-right'><i class='icon-plus-sign'></i> Task</a>
+      <%= task_f.input :name, required: true %>
       <%= task_f.input :due_at, as: :date, required: true %>
       </div>      
       <% end %>

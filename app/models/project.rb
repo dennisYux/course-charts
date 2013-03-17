@@ -24,7 +24,7 @@ class Project < ActiveRecord::Base
   	tasks.each do |t|
   		start = t.started_at if start > t.started_at
   	end
-  	return start
+  	start
   end
 
   def done_at
@@ -34,7 +34,7 @@ class Project < ActiveRecord::Base
     tasks.each do |t|
       done = t.done_at if done < t.done_at
     end
-    return done
+    done
   end
 
   def hours_used
@@ -42,7 +42,7 @@ class Project < ActiveRecord::Base
     tasks.each do |t|
       hours += t.hours_used
     end   
-    return hours 
+    hours 
   end
 
   private

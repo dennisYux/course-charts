@@ -2,9 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#main {
-	.parent{		
-	  .right{
-	  }
-	}
+a.new-task {
+	cursor: pointer;
+}
+
+.task-info {
+	padding-top: 5px;
 }

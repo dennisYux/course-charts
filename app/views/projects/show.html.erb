@@ -1,11 +1,8 @@
 <%= render "shared/account_header" %>
 
 <p class='pull-right'><%= link_to raw("<i class='icon-plus-sign'></i> New project"), new_project_path %></p>
-<% @projects.each_index do |i| %>
-<h3><%= @projects[i].name.upcase %></h3>
-<p><%= @projects[i].description %></p>
-<div id=<%= "chartset_"+i.to_s+"_tasks_hours" %> style="width: 900px; height: 500px;"></div>
-<% end %>
+<h3><%= @project.name.upcase %></h3>
+<p><%= @project.description %></p>
+<div id="chartset_tasks_hours" style="width: 900px; height: 500px;"></div>
 
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', project_path %>
+

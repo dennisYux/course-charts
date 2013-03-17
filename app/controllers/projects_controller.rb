@@ -13,13 +13,14 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
-    @tasks = [Task.new]
+    @tasks = [Task.new] * 4
   end
 
   # GET /projects/1/edit
   def edit
     @project = Project.find(params[:id])
-    @tasks = @project.tasks.empty? ? [Task.new] : @project.tasks
+    @tasks = @project.tasks
+    @tasks << Task.new while @tasks.count < 4
   end
 
   # POST /projects
@@ -93,12 +94,12 @@ class ProjectsController < ApplicationController
   #
   def update_tasks!    
     @tasks_params.each do |task_params|
-      tasks = Task.where("project_id=#{@project.id} and tag=#{task_params[:tag]}")
-      if tasks.empty?        
+      # primary key, only one task expected
+      task = Task.first("project_id=? and tag=?", @project.id, task_params[:tag])
+      if task.nil?        
         @project.tasks.create!(task_params)
       else
-        # primary key, only one task expected
-        tasks.first.update_attributes!(task_params)
+        task.update_attributes!(task_params)
       end
     end
   end

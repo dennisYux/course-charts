@@ -57,8 +57,8 @@ drawCharts = ->
     
     # parse chart data
     dataArray = [['Task', 'Total Hours']]    
-    for task_hours, i in dataset.tasks_hours
-      dataArray.push ['Task '+(i+1), task_hours]
+    for task_hours in dataset.tasks_hours
+      dataArray.push [task_hours.task, task_hours.total_hours]
       #console.log dataArray[i]
 
     # build chart hash
@@ -67,7 +67,7 @@ drawCharts = ->
       data: google.visualization.arrayToDataTable dataArray
       options:
         title: 'Tasks Hours'
-      container: 'chartset-'+id+'-tasks-hours'
+      container: chart_prefix+'tasks-hours'
 
     # draw chart
     drawChart chart

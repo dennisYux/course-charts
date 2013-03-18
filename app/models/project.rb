@@ -37,6 +37,7 @@ class Project < ActiveRecord::Base
     done
   end
 
+  # consider to remove
   def hours_used
     hours = 0
     tasks.each do |t|

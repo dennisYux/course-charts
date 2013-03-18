@@ -36,6 +36,7 @@ class Task < ActiveRecord::Base
     done
   end
 
+  # consider to remove
   def hours_used
     hours = 0
     records.each do |r|

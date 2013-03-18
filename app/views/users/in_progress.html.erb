@@ -4,6 +4,7 @@
 <% @projects.each_index do |i| %>
 <h3><%= @projects[i].name.upcase %></h3>
 <p><%= @projects[i].description %></p>
+<div id=<%= "chartset-"+i.to_s+"-project_timeline" %> style="width: 900px; height: 500px;"></div>
 <div id=<%= "chartset-"+i.to_s+"-tasks-hours" %> style="width: 900px; height: 500px;"></div>
 <% end %>
 

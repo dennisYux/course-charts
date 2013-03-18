@@ -33,8 +33,28 @@ drawCharts = ->
   # iteratively draw charts for each project
   for dataset, id in datasets
 
+    chart_prefix = 'chartset-'+id+'-';
+
+    ### chart project timeline ###
+
+    # parse chart data
+    dataArray = [['Date', 'Total Hours']]
+    for time_point in dataset.project_timeline
+      dataArray.push [time_point.date, time_point.total_hours]
+
+    # build chart hash
+    chart =
+      type: 'ColumnChart'
+      data: google.visualization.arrayToDataTable dataArray
+      options:
+        title: 'Project Timeline'
+      container: chart_prefix+'project_timeline'
+
+    # draw chart
+    drawChart chart
+
     ### chart tasks hours ###
-  
+    
     # parse chart data
     dataArray = [['Task', 'Total Hours']]    
     for task_hours, i in dataset.tasks_hours

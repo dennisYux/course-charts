@@ -28,6 +28,5 @@ class User < ActiveRecord::Base
       params.delete(:password_confirmation) if params[:password_confirmation].blank? 
     end 
     update_attributes(params) 
-  end
-  
+  end  
 end

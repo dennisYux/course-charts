@@ -13,7 +13,7 @@
 */
 
 .content {
-	#background-color: #eee;
+  #background-color: #eee;
   padding: 20px;
   margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
   -webkit-border-radius: 0 0 6px 6px;
@@ -25,20 +25,20 @@
 }
 
 #main {
-	#account-header {
-		/* account information */
-		#account-info {
+  #account-header {
+    /* account information */
+    #account-info {
 
-		}
-		/* child navigation bar */
-		#account-nav {  
-		  margin: 0 -30px;
-		  padding: 20px 0 20px 0;
-		  ul {
-		  	margin: 0 -15px;
-		  }
-		}
-	}
+    }
+    /* child navigation bar */
+		#account-nav {
+      margin: 0 -30px;
+      padding: 20px 0 20px 0;
+      ul {
+        margin: 0 -15px;
+      }
+    }
+  }
 }
 
 	

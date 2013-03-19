@@ -15,8 +15,8 @@ Boarder::Application.routes.draw do
     get    '/account/edit(.:format)',  to: 'devise::registrations#edit',   as: :edit_account
     put    '/account(.:format)',       to: 'devise::registrations#update', as: :account
     get    '/users/cancel(.:format)',  to: 'devise::registrations#cancel', as: :cancel_user_registration
-		delete '/users(.:format)',         to: 'devise::registrations#destroy'	
-	end
+    delete '/users(.:format)',         to: 'devise::registrations#destroy'
+  end
 
   get '/admin(.:format)', to: 'users#index', as: :admin  
   #
@@ -27,7 +27,7 @@ Boarder::Application.routes.draw do
   get '/account/report(.:format)', to: 'users#report', as: :account_report
 
   scope 'account' do
-  	resources :projects 
+    resources :projects 
   end
 
   scope 'data' do
@@ -36,5 +36,4 @@ Boarder::Application.routes.draw do
   end
 
   #get '/about', to: 'about#index', as: :about
-
 end

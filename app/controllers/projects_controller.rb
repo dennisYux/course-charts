@@ -137,5 +137,4 @@ class ProjectsController < ApplicationController
       @tasks << Task.new(task_params)
     end
   end
-
 end

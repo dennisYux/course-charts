@@ -1,13 +1,10 @@
 class CreateRecords < ActiveRecord::Migration
   def change
     create_table :records do |t|
-			# t.string 	 :user_name
-			t.string :description
-			t.float  :hours
-			# t.datetime :created_at
-
-			t.references :user
-			t.references :task
+      t.string :description
+      t.float  :hours
+      t.references :user
+      t.references :task
 
       t.timestamps
     end

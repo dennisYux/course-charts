@@ -1,15 +1,13 @@
 <%= render "shared/account_header" %>
 <h3>Projects</h3>
-
 <div class='pull-right'><%= link_to 'New Project', new_project_path %></div>
-
 <% if @projects.any? %>
-	<% @projects.each do |project| %>
-		<div class='span2'>
-		  <%= link_to project.name, project %>
-		</div>
-	<% end %>
+  <% @projects.each do |project| %>
+    <div class='span2'>
+      <%= link_to project.name, project %>
+    </div>
+  <% end %>
 <% else %>
-	<p>There is no project</p>
+  <p>There is no project</p>
 <% end %>
 

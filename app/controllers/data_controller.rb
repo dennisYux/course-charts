@@ -34,16 +34,16 @@ class DataController < ApplicationController
       tasks_ids << task.id
     end
 
-    # project timeline
-    project_timeline = []
+    # project hours
+    project_hours = []
     records = Record.select("date(created_at) as record_date, sum(hours) as total_hours")
                     .where(task_id: tasks_ids)
                     .group("date(created_at)")
                     .order("date(created_at)")
     records.each do |record|
-      project_timeline << {date: record.record_date, total_hours: record.total_hours}
+      project_hours << {date: record.record_date, total_hours: record.total_hours}
     end
-    charts_data[:project_timeline] = project_timeline
+    charts_data[:project_hours] = project_hours
 
   	# tasks hours
   	tasks_hours = []

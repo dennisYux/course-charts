@@ -2,14 +2,14 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-google.load("visualization", "1", {packages:["corechart"]});
+google.load "visualization", "1", {packages: ["corechart"]}
 
 #
 # parse date string "2013-01-01" to date object
 #
 strToDate = (str) ->
   date = str.split '-'
-  new Date(date[0], date[1], date[2])
+  new Date date[0], date[1], date[2]
 
 #
 # draw single chart
@@ -21,7 +21,7 @@ drawChart = (chart) ->
   wrap.setDataTable chart.data
   wrap.setOptions chart.options
   wrap.setContainerId chart.container
-  wrap.draw();
+  wrap.draw()
 
 #
 # draw charts on project page
@@ -40,24 +40,24 @@ drawCharts = ->
   # iteratively draw charts for each project
   for dataset, id in datasets
 
-    chart_prefix = 'chartset-'+id+'-';
+    chartPrefix = 'chartset-'+id+'-';
 
-    ### chart project timeline ###
+    ### chart project hours ###
 
     # parse chart data
     data = new google.visualization.DataTable
-    data.addColumn('date', 'Date')
-    data.addColumn('number', 'Total Hours')
-    for time_point in dataset.project_timeline
-      data.addRow [strToDate(time_point.date), time_point.total_hours]
+    data.addColumn 'date', 'Date'
+    data.addColumn 'number', 'Total Hours'
+    for point in dataset.project_hours
+      data.addRow [strToDate(point.date), point.total_hours]
 
     # build chart hash
     chart =
       type: 'ColumnChart'
       data: data
       options:
-        title: 'Project Timeline' 
-      container: chart_prefix+'project_timeline'
+        title: 'Project Hours' 
+      container: chartPrefix+'project_hours'
 
     # draw chart
     drawChart chart
@@ -66,10 +66,10 @@ drawCharts = ->
     
     # parse chart data
     data = new google.visualization.DataTable
-    data.addColumn('string', 'Task')
-    data.addColumn('number', 'Total Hours') 
-    for task_hours in dataset.tasks_hours
-      data.addRow [task_hours.task, task_hours.total_hours]
+    data.addColumn 'string', 'Task'
+    data.addColumn 'number', 'Total Hours' 
+    for point in dataset.tasks_hours
+      data.addRow [point.task, point.total_hours]
 
     # build chart hash
     chart = 
@@ -77,7 +77,7 @@ drawCharts = ->
       data: data
       options:
         title: 'Tasks Hours'
-      container: chart_prefix+'tasks-hours'
+      container: chartPrefix+'tasks-hours'
 
     # draw chart
     drawChart chart

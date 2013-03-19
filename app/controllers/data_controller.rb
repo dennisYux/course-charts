@@ -52,7 +52,7 @@ class DataController < ApplicationController
                     .group("task_id")
                     .order("task_id")
   	records.each do |record|
-      tag = Task.select("tag").first(id: record.task_id).tag
+      tag = Task.select("tag").where(id: record.task_id).first.tag
   		tasks_hours << {task: 'Task '+(tag+1).to_s, total_hours: record.total_hours}
   	end
   	charts_data[:tasks_hours] = tasks_hours

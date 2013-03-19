@@ -22,10 +22,10 @@ users = [{name: 'Jack', email: 'jack@example.com', password: '12345678', passwor
 projects = [{name: 'CSI 5100', description: 'Software testing techniques', manager: 'Jack', due_at: DateTime.new(2013,6,1,23,59,59)},
 {name: 'ELG 5369', description: 'Internetworking techniques', manager: 'Rose', due_at: DateTime.new(2013,5,1,23,59,59)},
 {name: 'ELG 5111', description: 'Multimedia techniques', manager: 'Jack', due_at: DateTime.new(2012,12,1,23,59,59)}]
-tasks = [{name: 'inception', due_at: DateTime.new(2013,4,1,23,59,59)},
-{name: 'elaboration', due_at: DateTime.new(2013,4,15,23,59,59)},
-{name: 'implementation', due_at: DateTime.new(2013,5,1,23,59,59)},
-{name: 'production', due_at: DateTime.new(2013,5,15,23,59,59)}]
+tasks = [{name: 'inception', tag: 0, due_at: DateTime.new(2013,4,1,23,59,59)},
+{name: 'elaboration', tag: 1, due_at: DateTime.new(2013,4,15,23,59,59)},
+{name: 'implementation', tag: 2, due_at: DateTime.new(2013,5,1,23,59,59)},
+{name: 'production', tag: 3, due_at: DateTime.new(2013,5,15,23,59,59)}]
 users.each do |u|
 	user = User.find_or_create_by_name(name: u[:name], email: u[:email], password: u[:password], password_confirmation: u[:password_confirmation])
 	puts 'user: ' << user.name
@@ -34,7 +34,7 @@ users.each do |u|
 		project = user.projects.create(name: p[:name], description: p[:description], manager: p[:manager], due_at: p[:due_at])
 		puts 'project: ' << project.name
 		tasks.each do |t|
-			task = project.tasks.create(name: t[:name], due_at: t[:due_at])
+			task = project.tasks.create(name: t[:name], tag: t[:tag], due_at: t[:due_at])
 			puts 'task: ' << task.name
 		end
 	end

@@ -95,7 +95,7 @@ class ProjectsController < ApplicationController
   def update_tasks!    
     @tasks_params.each do |task_params|
       # primary key, only one task expected
-      task = Task.first("project_id=? and tag=?", @project.id, task_params[:tag])
+      task = Task.where("project_id=? and tag=?", @project.id, task_params[:tag]).first
       if task.nil?        
         @project.tasks.create!(task_params)
       else

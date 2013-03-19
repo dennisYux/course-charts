@@ -5,6 +5,13 @@
 google.load("visualization", "1", {packages:["corechart"]});
 
 #
+# parse date string "2013-01-01" to date object
+#
+strToDate = (str) ->
+  date = str.split '-'
+  new Date(date[0], date[1], date[2])
+
+#
 # draw single chart
 #
 drawChart = (chart) ->
@@ -38,16 +45,18 @@ drawCharts = ->
     ### chart project timeline ###
 
     # parse chart data
-    dataArray = [['Date', 'Total Hours']]
+    data = new google.visualization.DataTable
+    data.addColumn('date', 'Date')
+    data.addColumn('number', 'Total Hours')
     for time_point in dataset.project_timeline
-      dataArray.push [time_point.date, time_point.total_hours]
+      data.addRow [strToDate(time_point.date), time_point.total_hours]
 
     # build chart hash
     chart =
       type: 'ColumnChart'
-      data: google.visualization.arrayToDataTable dataArray
+      data: data
       options:
-        title: 'Project Timeline'
+        title: 'Project Timeline' 
       container: chart_prefix+'project_timeline'
 
     # draw chart
@@ -56,15 +65,16 @@ drawCharts = ->
     ### chart tasks hours ###
     
     # parse chart data
-    dataArray = [['Task', 'Total Hours']]    
+    data = new google.visualization.DataTable
+    data.addColumn('string', 'Task')
+    data.addColumn('number', 'Total Hours') 
     for task_hours in dataset.tasks_hours
-      dataArray.push [task_hours.task, task_hours.total_hours]
-      #console.log dataArray[i]
+      data.addRow [task_hours.task, task_hours.total_hours]
 
     # build chart hash
     chart = 
-      type: 'BarChart'
-      data: google.visualization.arrayToDataTable dataArray
+      type: 'PieChart'
+      data: data
       options:
         title: 'Tasks Hours'
       container: chart_prefix+'tasks-hours'

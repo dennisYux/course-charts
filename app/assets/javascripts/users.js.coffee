@@ -57,7 +57,32 @@ drawCharts = ->
       data: data
       options:
         title: 'Project Hours' 
-      container: chartPrefix+'project_hours'
+      container: chartPrefix+'project-hours'
+
+    # draw chart
+    drawChart chart
+
+    ### chart tasks span ###
+
+    # parse chart data
+    data = new google.visualization.DataTable
+    data.addColumn 'string', 'Task'
+    data.addColumn 'number', 'Expected'
+    data.addColumn {type: 'number', role: 'interval'}
+    data.addColumn {type: 'number', role: 'interval'}
+    data.addColumn 'number', 'Practical'
+    data.addColumn {type: 'number', role: 'interval'}
+    data.addColumn {type: 'number', role: 'interval'}
+    for point in dataset.tasks_span
+      data.addRow [point.task, 0, point.create, point.due, 0, point.start, point.finish]
+
+    # build chart hash
+    chart =
+      type: 'BarChart'
+      data: data
+      options:
+        title: 'Tasks Span' 
+      container: chartPrefix+'tasks-span'
 
     # draw chart
     drawChart chart

@@ -23,38 +23,40 @@ class DataController < ApplicationController
   def charts_data_for(project)
   	charts_data = {}
 
-    #
-    # data are retrieved with standard SQL query language 
-    #
-
-  	# project parameters
-  	tasks = project.tasks
-    tasks_ids = []
-    tasks.each do |task|
-      tasks_ids << task.id
-    end
-
-    # project hours
+    ### chart project hours ###
     project_hours = []
-    records = Record.select("date(created_at) as record_date, sum(hours) as total_hours")
-                    .where(task_id: tasks_ids)
-                    .group("date(created_at)")
-                    .order("date(created_at)")
+    records = project.records.select("date(records.created_at) as create_date, sum(hours) as total_hours")
+                             .group("date(records.created_at)")
     records.each do |record|
-      project_hours << {date: record.record_date, total_hours: record.total_hours}
+      project_hours << {date: record.create_date, total_hours: record.total_hours}
     end
     charts_data[:project_hours] = project_hours
 
-  	# tasks hours
+    ### chart tasks span ###
+    tasks_span = []
+    project_create_date = project.created_at.to_date
+    tasks = project.tasks
+    tasks.each do |task|
+      records = task.records
+      #
+      # task expected time span from task creation to due
+      # task practical time span from first record creation to last record creation
+      # time is translated into days since project creation
+      #
+      tasks_span << {task: 'Task '+(task.tag+1).to_s,
+        create: (task.created_at.to_date - project_create_date).to_i,
+        due: (task.due_at.to_date - project_create_date).to_i,
+        start: (records.minimum("created_at").to_date - project_create_date).to_i,
+        finish: (records.maximum("created_at").to_date - project_create_date).to_i}
+    end
+    charts_data[:tasks_span] = tasks_span
+
+  	### chart tasks hours ###
   	tasks_hours = []
-    records = Record.select("task_id, sum(hours) as total_hours")
-                    .where(task_id: tasks_ids)
-                    .group("task_id")
-                    .order("task_id")
-  	records.each do |record|
-      tag = Task.select("tag").where(id: record.task_id).first.tag
-  		tasks_hours << {task: 'Task '+(tag+1).to_s, total_hours: record.total_hours}
-  	end
+    tasks = project.tasks
+    tasks.each do |task|
+      tasks_hours << {task: 'Task '+(task.tag+1).to_s, total_hours: task.records.sum("hours")}
+    end
   	charts_data[:tasks_hours] = tasks_hours
 
   	charts_data

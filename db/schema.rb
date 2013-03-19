@@ -35,11 +35,11 @@ ActiveRecord::Schema.define(:version => 20130305025241) do
 
   create_table "records", :force => true do |t|
     t.string   "description"
-    t.decimal  "hours",       :precision => 4, :scale => 2
+    t.float    "hours"
     t.integer  "user_id"
     t.integer  "task_id"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   add_index "records", ["user_id", "task_id"], :name => "index_records_on_user_id_and_task_id"

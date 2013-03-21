@@ -62,8 +62,8 @@ class ProjectsController < ApplicationController
   def separate_params
     @project_params = params[:project]
     @tasks_params = @project_params.delete(:task)
-    @tasks_params.each_index do |i|      
-      @tasks_params[i][:tag] = i
+    @tasks_params.each do |i, task_params|      
+      task_params[:tag] = i
     end
   end
 
@@ -93,9 +93,9 @@ class ProjectsController < ApplicationController
   # in both save and update cases
   #
   def update_tasks!    
-    @tasks_params.each do |task_params|
+    @tasks_params.each do |i, task_params|
       # primary key, only one task expected
-      task = Task.where("project_id=? and tag=?", @project.id, task_params[:tag]).first
+      task = Task.where("project_id=? and tag=?", @project.id, i).first
       if task.nil?        
         @project.tasks.create!(task_params)
       else
@@ -133,7 +133,7 @@ class ProjectsController < ApplicationController
     # parameters used when render views 
     @project = Project.new(@project_params)
     @tasks = []
-    @tasks_params.each do |task_params|
+    @tasks_params.each do |i, task_params|
       @tasks << Task.new(task_params)
     end
   end

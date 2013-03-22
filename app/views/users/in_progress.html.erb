@@ -15,10 +15,4 @@
   </div>
 <% end %>
 <p class='pull-right'><%= link_to raw("<i class='icon-plus-sign'></i> New project"), new_project_path %></p>
-<% @projects.each_index do |i| %>
-  <h3><%= @projects[i].name.upcase %></h3>
-  <p><%= @projects[i].description %></p>
-  <div id=<%= "chartset-"+i.to_s+"-project-hours" %> style="width: 900px; height: 500px;"></div>
-  <div id=<%= "chartset-"+i.to_s+"-tasks-span" %> style="width: 900px; height: 500px;"></div>
-  <div id=<%= "chartset-"+i.to_s+"-tasks-hours" %> style="width: 900px; height: 500px;"></div>
-<% end %>
+<%= render "shared/charts" %>

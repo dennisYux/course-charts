@@ -26,10 +26,11 @@ drawChart = (chart) ->
 #
 # draw charts on project page
 #
-drawCharts = ->
+drawCharts = (url, params={}) ->
 	# trigger an ajax request to get json data for charts
   jsonData = $.ajax({
-   	url: '/data/in-progress.json'
+   	url: url
+    data: params
     dataType: "json"
     async: false
   }).responseText 
@@ -109,5 +110,16 @@ drawCharts = ->
 
     ### other charts ###
 
+#
+# retrieve id parameters from url
+#
+retrvId = (str) ->
+  parseInt str.slice(str.lastIndexOf('/')+1)
+
 # set callbacks when page load
-google.setOnLoadCallback drawCharts
+$ ->
+  path = window.location.pathname
+  if path == '/account' then drawCharts '/data/in-progress-projects.json'
+  else if path.match '/account/projects/' then drawCharts '/data/project.json', {id: retrvId path}
+    
+

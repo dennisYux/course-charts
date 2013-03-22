@@ -32,8 +32,8 @@ Boarder::Application.routes.draw do
   end
 
   scope 'data' do
-    get '/overview(.:format)', to: 'data#overview'
-    get '/in-progress(.:format)', to: 'data#in_progress'
+    get '/in-progress-projects(.:format)', to: 'data#in_progress_projects'
+    get '/project(.:format)', to: 'data#project'
   end
 
   #get '/about', to: 'about#index', as: :about

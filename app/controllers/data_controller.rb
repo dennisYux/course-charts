@@ -1,11 +1,26 @@
 class DataController < ApplicationController
 
-  def in_progress
-   	@projects = Project.where("due_at > ?", Time.now.weeks_ago(1))
+  #
+  # respond data for in progress projects' charts
+  #
+  def in_progress_projects
+   	projects = current_user.projects.where("due_at > ?", Time.now.weeks_ago(1))
     data = []
-    @projects.each do |project|
+    projects.each do |project|
     	data << charts_data_for(project)
     end
+    # respond with json data
+    respond_to do |format|
+      format.json { render json: data.to_json }
+    end
+  end
+
+  #
+  # respond data for current project(specified by id)'s charts
+  #
+  def project
+    project = current_user.projects.find(params[:id])
+    data = [charts_data_for(project)]
     # respond with json data
     respond_to do |format|
       format.json { render json: data.to_json }

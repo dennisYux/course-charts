@@ -5,6 +5,7 @@ class Project < ActiveRecord::Base
   attr_accessible :name, :description, :manager, :due_at
 
   # validations
+  validates_presence_of :name
 
   # model hooks
   # project should not be destroied

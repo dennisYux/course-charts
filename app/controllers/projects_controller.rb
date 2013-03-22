@@ -13,20 +13,18 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
-    @tasks = [Task.new] * 4
+    @tasks = [Task.new]
   end
 
   # GET /projects/1/edit
   def edit
     @project = Project.find(params[:id])
     @tasks = @project.tasks
-    @tasks << Task.new while @tasks.count < 4
   end
 
   # POST /projects
   def create
-    separate_params
-    @project = Project.new(@project_params)
+    initiate_params
     if project_saved?
       redirect_to @project, notice: "Project was successfully created."
     else
@@ -37,9 +35,8 @@ class ProjectsController < ApplicationController
 
   # PUT /projects/1
   def update
-    separate_params
-    @project = Project.find(params[:id])
-    if project_updated?
+    initiate_params
+    if project_saved?
       redirect_to @project, notice: 'Project was successfully updated.'
     else
       prepare_params_for_view
@@ -59,12 +56,16 @@ class ProjectsController < ApplicationController
   #
   # categorize params
   #
-  def separate_params
+  def initiate_params
     @project_params = params[:project]
     @tasks_params = @project_params.delete(:task)
     @tasks_params.each do |i, task_params|      
       task_params[:tag] = i
     end
+    # instance parameters
+    @user = current_user
+    @project = @user.projects.where(id: params[:id]).first
+    @project = Project.new(@project_params) if @project.nil?
   end
 
   #
@@ -73,7 +74,11 @@ class ProjectsController < ApplicationController
   #
   def project_saved?
     begin  
-      @project.transaction do  
+      @project.transaction do
+        # validations
+        ensure_unique_project_name!
+        ensure_unique_tasks_names!  
+        # save
         save_project!
         save_tasks!
       end
@@ -83,47 +88,51 @@ class ProjectsController < ApplicationController
     end 
   end
 
-  def save_project!     
-    @project.save!
-    @project.contracts.create!(user_id: current_user.id)
+  #
+  # create or update project as needed
+  #
+  def save_project!
+    #
+    # use "@user.project.create" creates contract besides project
+    # given "@user.project.build"+"@project.save" does not create contract
+    # since we have a separate model contract ...
+    #     
+    @project.id.nil? ? @project = @user.projects.create!(@project_params) : @project.update_attributes!(@project_params)
   end
 
   #
-  # new tasks might need to be created 
-  # in both save and update cases
+  # create or update tasks as needed
+  # project should have a valid id
   #
-  def update_tasks!    
+  def save_tasks!    
     @tasks_params.each do |i, task_params|
       # primary key, only one task expected
       task = Task.where("project_id=? and tag=?", @project.id, i).first
-      if task.nil?        
-        @project.tasks.create!(task_params)
-      else
-        task.update_attributes!(task_params)
-      end
+      task.nil? ? @project.tasks.create!(task_params) : task.update_attributes!(task_params)
     end
   end
 
-  alias :save_tasks! :update_tasks!
-
   #
-  # true if the project and all tasks are updated
-  # false otherwise
+  # project names are forced unique for single user
+  # however, they are allowed duplicated among different users 
   #
-  def project_updated?
-    begin  
-      @project.transaction do  
-        update_project!
-        update_tasks!
-      end
-      return true  
-    rescue Exception => e
-      return false
-    end 
+  def ensure_unique_project_name!
+    dup_name_projects = @user.projects.where("name=?", @project.name)
+    dup_name_projects.each do |project|
+      raise RuntimeError, 'Duplicated project name' if project.id != @project.id
+    end
   end
 
-  def update_project!
-    @project.update_attributes!(@project_params)
+  #
+  # tasks names are forced unique for single project
+  # however, they are allowed duplicated among different projects 
+  #
+  def ensure_unique_tasks_names! 
+    for i in 0..(@tasks_params.count-2)
+      for j in (i+1)..(@tasks_params.count-1)
+        raise RuntimeError, 'Duplicated tasks names' if @tasks_params[i.to_s][:name] == @tasks_params[j.to_s][:name]
+      end
+    end
   end
 
   #

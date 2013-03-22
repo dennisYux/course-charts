@@ -29,4 +29,12 @@ class User < ActiveRecord::Base
     end 
     update_attributes(params) 
   end  
+
+  def in_progress_projects
+    projects.where("due_at >= ?", Time.now.weeks_ago(1))
+  end
+
+  def history_projects
+    projects.where("due_at < ?", Time.now.weeks_ago(1))
+  end
 end

@@ -27,7 +27,8 @@ Boarder::Application.routes.draw do
   get '/account/report(.:format)', to: 'users#report', as: :account_report
 
   scope 'account' do
-    resources :projects 
+    resources :projects
+    resources :records, only: [:create]
   end
 
   scope 'data' do

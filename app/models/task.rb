@@ -5,6 +5,7 @@ class Task < ActiveRecord::Base
   attr_accessible :name, :tag, :due_at
 
   # validations
+  validates_presence_of :name
 
   # model hooks  
   # task should not be destroied

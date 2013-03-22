@@ -8,18 +8,15 @@ class UsersController < ApplicationController
 
   def in_progress
     @user = current_user
-    @projects = []
-    @user.projects.each do |project|
-      @projects << project if project.due_at >= Time.now.weeks_ago(1)
-    end
+    @projects = @user.in_progress_projects
+    @project = @projects.first
+    @task = @project.tasks.first
+    @record = @user.records.build
   end
 
   def history
     @user = current_user
-    @projects = []
-    @user.projects.each do |project|
-      @projects << project if project.due_at < Time.now.weeks_ago(1)
-    end
+    @projects = @user.history_projects
   end
 
   def report

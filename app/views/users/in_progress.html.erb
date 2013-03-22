@@ -1,4 +1,19 @@
 <%= render "shared/account_header" %>
+<%= simple_form_for @record, defaults: {required: true} do |f| %>
+  <div class="form-inputs">
+    <%= f.simple_fields_for @project do |pf| %>
+      <%= pf.input :name, collection: in_progress_projects_names_of(@user), autofocus: true %>
+    <% end %> 
+    <%= f.simple_fields_for @task do |tf| %>
+      <%= tf.input :name, collection: tasks_names_of(@project) %>
+    <% end %>
+    <%= f.input :hours %>
+    <%= f.input :description %>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
 <p class='pull-right'><%= link_to raw("<i class='icon-plus-sign'></i> New project"), new_project_path %></p>
 <% @projects.each_index do |i| %>
   <h3><%= @projects[i].name.upcase %></h3>
@@ -7,5 +22,3 @@
   <div id=<%= "chartset-"+i.to_s+"-tasks-span" %> style="width: 900px; height: 500px;"></div>
   <div id=<%= "chartset-"+i.to_s+"-tasks-hours" %> style="width: 900px; height: 500px;"></div>
 <% end %>
-
-

@@ -1,18 +1,20 @@
 <%= render "shared/account_header" %>
-<%= simple_form_for @record, defaults: {required: true} do |f| %>
-  <div class="form-inputs">
-    <%= f.simple_fields_for @project do |pf| %>
-      <%= pf.input :name, collection: in_progress_projects_names_of(@user), autofocus: true %>
-    <% end %> 
-    <%= f.simple_fields_for @task do |tf| %>
-      <%= tf.input :name, collection: tasks_names_of(@project) %>
-    <% end %>
-    <%= f.input :hours %>
-    <%= f.input :description %>
-  </div>
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+<% if @projects.any? %>
+  <%= simple_form_for @record, defaults: {required: true} do |f| %>
+    <div class="form-inputs">
+      <%= f.simple_fields_for @project do |pf| %>
+        <%= pf.input :name, collection: in_progress_projects_names_of(@user), autofocus: true %>
+      <% end %> 
+      <%= f.simple_fields_for @task do |tf| %>
+        <%= tf.input :name, collection: tasks_names_of(@project) %>
+      <% end %>
+      <%= f.input :hours %>
+      <%= f.input :description %>
+    </div>
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
+  <% end %>
 <% end %>
 <p class='pull-right'><%= link_to raw("<i class='icon-plus-sign'></i> New project"), new_project_path %></p>
 <%= render "shared/charts" %>

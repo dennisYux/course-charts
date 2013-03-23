@@ -9,9 +9,13 @@ class UsersController < ApplicationController
   def in_progress
     @user = current_user
     @projects = @user.in_progress_projects
-    @project = @projects.first
-    @task = @project.tasks.first
-    @record = @user.records.build
+    # serve for the record submission
+    if @projects.any?
+      @project = @projects.first
+      # at least one task has to be created
+      @task = @project.tasks.first
+      @record = @user.records.build
+    end
   end
 
   def history

@@ -4,25 +4,12 @@ class UsersController < ApplicationController
   def index
     authorize! :index, @user, :message => 'Not authorized as an administrator.'
     @users = User.all
-  end  
+  end
 
-  def in_progress
+  def show
     @user = current_user
     @projects = @user.in_progress_projects
-    # serve for the record submission
-    if @projects.any?
-      @project = @projects.first
-      # at least one task has to be created
-      @task = @project.tasks.first
-      @record = @user.records.build
-    end
-  end
-
-  def history
-    @user = current_user
-    @projects = @user.history_projects
-  end
-
-  def report
+    @tasks = @projects.any? ? @projects.first.tasks : Task.new
+    @record = Record.new
   end
 end

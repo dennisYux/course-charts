@@ -12,12 +12,10 @@ class User < ActiveRecord::Base
 
   # validations
   validates_presence_of :name
-  validates_uniqueness_of :name
 
   # model hooks
-  # user should not be destroied
-  has_many :contracts, dependent: :destroy
-  has_many :projects, through: :contracts
+  # user should not be destroied  
+  has_and_belongs_to_many :projects, join_table: :users_projects
   has_many :records, dependent: :destroy
   has_many :tasks, through: :records
 

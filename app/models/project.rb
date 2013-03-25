@@ -9,10 +9,10 @@ class Project < ActiveRecord::Base
 
   # model hooks
   # project should not be destroied
-  has_many :contracts, dependent: :destroy
-  has_many :users, through: :contracts
+  has_and_belongs_to_many :users, join_table: :users_projects
   has_many :tasks, dependent: :destroy
   has_many :records, through: :tasks
+  has_many :invitations, dependent: :destroy
 
   # callbacks
   before_save :fill_due_at

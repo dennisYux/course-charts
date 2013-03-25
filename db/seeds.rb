@@ -31,10 +31,12 @@ users.each do |u|
   puts 'user: ' << user.name
   user.confirm!
   projects.each do |p|
-    project = user.projects.create(name: p[:name], description: p[:description], manager: p[:manager], due_at: p[:due_at])
+    project = Project.find_or_create_by_name(name: p[:name], description: p[:description], manager: p[:manager], due_at: p[:due_at])
+    # find_or_create does not build JOIN associations
+    user.projects << project
     puts 'project: ' << project.name
     tasks.each do |t|
-      task = project.tasks.create(name: t[:name], tag: t[:tag], due_at: t[:due_at])
+      task = project.tasks.find_or_create_by_name(name: t[:name], tag: t[:tag], due_at: t[:due_at])
       puts 'task: ' << task.name
     end
   end

@@ -18,22 +18,15 @@ Boarder::Application.routes.draw do
     delete '/users(.:format)',         to: 'devise::registrations#destroy'
   end
 
-  get '/admin(.:format)', to: 'users#index', as: :admin  
-  #
-  # it is better to define separate controllers for in progress, history ... ?
-  #
-  get '/account(.:format)', to: 'users#in_progress', as: :user_root
-  get '/account/history(.:format)', to: 'users#history', as: :account_history
-  get '/account/report(.:format)', to: 'users#report', as: :account_report
+  get '/admin(.:format)', to: 'users#index', as: :admin
+  get '/account(.:format)', to: 'users#show', as: :user_root
 
   scope 'account' do
-    resources :projects
-    resources :records, only: [:create]
-  end
-
-  scope 'data' do
-    get '/in-progress-projects(.:format)', to: 'data#in_progress_projects'
-    get '/project(.:format)', to: 'data#project'
+    resources :projects do
+      resource :team, only: [:new, :create, :show]    
+      resources :records, only: [:create]
+    end    
+    resource :report, only: [:show], as: 'account_report'
   end
 
   #get '/about', to: 'about#index', as: :about

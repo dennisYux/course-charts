@@ -6,9 +6,10 @@ class TeamManager < ActionMailer::Base
   #
   #   en.team_manager.invitation.subject
   #
-  def invitation(user, project, email)
+  def invitation(user, project, email, invitation_token)
     @user = user
     @project = project
+    @invitation_token = invitation_token
 
     mail to: email, subject: "Team invitation"
   end

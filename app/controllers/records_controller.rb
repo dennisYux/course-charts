@@ -1,4 +1,6 @@
 class RecordsController < ApplicationController
+  before_filter :authenticate_user!
+  
   def create
     project = Project.find(params[:project_id])
     record = Record.new(hours: params[:record][:hours], description: params[:record][:description])

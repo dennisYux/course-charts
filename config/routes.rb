@@ -23,7 +23,7 @@ Boarder::Application.routes.draw do
 
   scope 'account' do
     resources :projects do
-      resource :team, only: [:new, :create, :show]    
+      resource :team, only: [:create, :show]    
       resources :records, only: [:create]
     end    
     resource :report, only: [:show], as: 'account_report'

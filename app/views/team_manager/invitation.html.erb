@@ -1,0 +1,6 @@
+<p>Dear friend,</p>
+<p><%= @user.name %> (<%= @user.email %>) has asked you to join the following project:</p>
+<h3><%= @project.name %></h3>
+<p>"<%= @project.description %>"</p>
+<p>You can confirm from the link below:</p> 
+<p><%= link_to "Confirm to join", project_team_url(@project, invitation_token: @invitation_token) %></p>

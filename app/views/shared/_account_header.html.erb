@@ -3,7 +3,7 @@
     <h3><%= current_user.name %></h3>
     <div class="row">
       <div class="span10">
-        <p><%= current_user.email if current_user.email %></p>
+        <p><%= current_user.email %></p>
       </div>
       <div class="span2">
         <p class='pull-right'><%= link_to raw("<i class='icon-ok-sign'></i> Edit"), edit_account_path %></p>

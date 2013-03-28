@@ -1,15 +1,22 @@
 <%= simple_form_for @record, url: project_records_path(@project), defaults: { required: false }, html: { class: "form-horizontal"} do |f| %>
-<div class="form-inputs">
-  <div class="control-group string optional">
-    <%= label_tag "task", "Tasks", class: "string optional control-label"%>
-    <div class="controls">
-    <%= select_tag "task", options_from_collection_for_select(@tasks, "id", "name") %>
+  <div class="form-inputs">
+    <div class="row">
+      <div class="span5">
+        <div class="control-group string optional">
+          <%= label_tag "task", "Tasks", class: "string optional control-label"%>
+          <div class="controls">
+          <%= select_tag "task", options_from_collection_for_select(@tasks, "id", "name") %>
+          </div>
+        </div>
+        <%= f.input :hours %>
+        <%= f.input :description %>
+      </div>
+      <div class="span5">
+        <p>Submit daily work here</p>
+      </div>
     </div>
   </div>
-  <%= f.input :hours %>
-  <%= f.input :description %>
-</div>
-<div class="form-actions">
-  <%= f.button :submit, "Submit", class: "btn-primary" %>
-</div>
+  <div class="form-actions">
+    <%= f.button :submit, "Submit", class: "btn-primary" %>
+  </div>
 <% end %>

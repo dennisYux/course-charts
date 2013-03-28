@@ -1,0 +1,23 @@
+<%= form_tag project_team_path(@project), class: "form-horizontal" do %>  
+  <div class="form-inputs">
+    <div class="row">
+      <div class="span5">
+        <div class="email-info">
+          <div class="control-group string optional">
+            <%= label_tag "email_0", "Email", class: "string optional control-label"%>
+            <div class="controls">
+            <%= text_field_tag "email[0]", "", id: "email_0" %>
+            </div>
+          </div>
+        </div>  
+        <a class="new-email" href="#">Add more</a>
+      </div>
+      <div class="span5">
+        <p>Invite collaborators via sending them emails</p>
+      </div>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%= submit_tag "Send Emails", class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -4,7 +4,11 @@ class TeamsController < ApplicationController
   def create
     user = current_user
     project = Project.find(params[:project_id])
-    emails = separate_emails_from params[:emails]
+    emails = []
+    params[:email].each do |i, email|
+      # in case more than one email are filled in one blank
+      emails += separate_emails_from email
+    end
     dup_emails = []
     uni_emails = []
     emails.each do |email|

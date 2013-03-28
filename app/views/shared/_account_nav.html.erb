@@ -7,5 +7,13 @@
     <li class="nav-header">Project</li>
     <li><%= link_to raw('<i class="icon-list"></i> List'), projects_path %></li>
     <li><%= link_to raw('<i class="icon-plus"></i> New'), new_project_path %></li>
+    <% if !@navigation_tags.nil? %>
+      <li class="divider"></li> 
+      <li class="nav-header">Navigation Tag</li> 
+      <li><a href="#"><i class="icon-circle-arrow-right"></i> Info</a></li>
+      <li><a href="#activities"><i class="icon-circle-arrow-right"></i> Activities</a></li>
+      <li><a href="#charts"><i class="icon-circle-arrow-right"></i> Charts</a></li>  
+      <li><a href="#tool-box"><i class="icon-circle-arrow-right"></i> Tool Box</a></li>
+    <% end %>
   </ul>
 </div>

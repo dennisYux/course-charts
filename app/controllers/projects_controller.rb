@@ -13,6 +13,8 @@ class ProjectsController < ApplicationController
     @members = @project.users.where("name!=?", @project.manager)
     @tasks = [Task.new] + @project.tasks
     @record = Record.new
+    # decide whether or not to display navigation tags
+    @navigation_tags = !nil
 
     respond_to do |format|
       format.html { render action: 'show' }

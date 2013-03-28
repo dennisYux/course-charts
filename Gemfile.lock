@@ -88,6 +88,9 @@ GEM
     ffi (1.4.0)
     figaro (0.5.4)
       rails (~> 3.0)
+    font-awesome-sass-rails (3.0.2.2)
+      railties (>= 3.1.1)
+      sass-rails (>= 3.1.1)
     gherkin (2.11.6)
       json (>= 1.7.6)
     hike (1.2.1)
@@ -205,6 +208,7 @@ DEPENDENCIES
   email_spec (>= 1.4.0)
   factory_girl_rails (>= 4.2.0)
   figaro (>= 0.5.3)
+  font-awesome-sass-rails (>= 3.0.2.2)
   jquery-rails
   launchy (>= 2.2.0)
   libv8 (>= 3.11.8)

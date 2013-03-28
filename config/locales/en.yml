@@ -5,10 +5,10 @@ en:
   activerecord:
     attributes:
       project:
-        name: "Course"
-        description: "Title"
+        name: "Course code"
+        description: "Name"
         manager: "Leader"
-        due_at: "Due"
+        due_at: "Deadline"
       task:
-        name: "Label"
-        due_at: "Due"      
+        name: "Name"
+        due_at: "Deadline"      

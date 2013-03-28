@@ -1,0 +1,11 @@
+<div id="account-sidebar" class="span2 bs-docs-sidebar">
+  <ul id="account-sidenav" class="nav nav-list bs-docs-sidenav affix">
+    <li class="nav-header">Account</li>
+    <li><%= link_to raw('<i class="icon-home"></i> Home'), account_path %></li>
+    <li><%= link_to raw('<i class="icon-user"></i> Edit'), edit_account_path %></li>
+    <li class="divider"></li> 
+    <li class="nav-header">Project</li>
+    <li><%= link_to raw('<i class="icon-list"></i> List'), projects_path %></li>
+    <li><%= link_to raw('<i class="icon-plus"></i> New'), new_project_path %></li>
+  </ul>
+</div>

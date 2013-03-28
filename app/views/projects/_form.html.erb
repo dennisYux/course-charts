@@ -1,27 +1,24 @@
-<%= simple_form_for @project do |f| %>
+<%= simple_form_for @project, html: {class: "form-horizontal"} do |f| %>
   <%= f.error_notification %>
   <div class="form-inputs">
-    <div class="project-info">
-      <h3>Project</h3>
-      <%= f.input :name, autofocus: true, required: true %>
+    <fieldset class="project-info">
+      <legend>Project</legend>
+      <%= f.input :name, autofocus: true, required: false %>
       <%= f.input :description, required: false %>
-      <%= f.input :manager, required: false %>
-      <%= f.input :due_at, as: :date, required: true %>
-    </div>
-    <div class="tasks-info">
-      <% @tasks.each_index do |i| %>
-      <div class="task-info">
-        <%= f.simple_fields_for 'task[]', @tasks[i], index: i do |task_f| %>
-        <h3>Task <%= i+1 %></h3>
-        <%= task_f.input :name, required: true %>
-        <%= task_f.input :due_at, as: :date, required: true %>
-        <% end %>
-      </div>
+      <%= f.input :due_at, as: :date, required: false %>
+    </fieldset>
+    <% @tasks.each_index do |i| %>
+    <fieldset class="task-info">
+      <legend>Task</legend>
+      <%= f.simple_fields_for 'task[]', @tasks[i], index: i do |task_f| %>
+      <%= task_f.input :name, required: false %>
+      <%= task_f.input :due_at, as: :date, required: false %>
       <% end %>
-      <a class='new-task'><i class='icon-plus-sign'></i> Task</a>
-    </div>
+    </fieldset>
+    <% end %>
+    <a class="new-task" href="#">Add more</a>
   </div>
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, "Create", class: "btn-primary" %>
   </div>
 <% end %>

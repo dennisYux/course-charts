@@ -11,7 +11,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @leader = @project.users.find_by_name(@project.manager)
     @members = @project.users.where("name!=?", @project.manager)
-    @tasks = @project.tasks
+    @tasks = [Task.new] + @project.tasks
     @record = Record.new
 
     respond_to do |format|

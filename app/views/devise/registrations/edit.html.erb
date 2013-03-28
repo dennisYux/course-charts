@@ -1,20 +1,20 @@
-<%= render "shared/account_header" %>
-
-<h3>Edit Account</h3>
-
-<%= simple_form_for(resource, as: resource_name, url: account_path, html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :name,  required: true, autofocus: true %>
-    <%= f.input :email, required: true %>
-    <%= f.input :password, autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false %>
-    <%= f.input :password_confirmation, required: false %>
+<div class="row">
+  <%= render "shared/account_nav" %>
+  <div class="span10">
+    <%= simple_form_for(resource, as: resource_name, url: account_path, html: { method: :put, class: "form-horizontal" }) do |f| %>
+      <%= f.error_notification %>
+      <div class="form-inputs">
+        <fieldset class="account-info">
+          <legend>Account</legend>
+          <%= f.input :name,  required: false, autofocus: true %>
+          <%= f.input :email, required: false %>
+          <%= f.input :password, autocomplete: "off", required: false %>
+          <%= f.input :password_confirmation, required: false %>
+        </fieldset>
+      </div>
+      <div class="form-actions">
+        <%= f.button :submit, "Update", class: "btn-primary" %>
+      </div>
+    <% end %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Update" %>
-  </div>
-<% end %>
-
-<%= link_to "Back", :back %>
+</div>

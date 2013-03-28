@@ -114,7 +114,7 @@ $ ->
 
 
 $ ->
-  $('.tasks-info').on('click', '.new-task', (e) ->
+  $('.form-inputs').on('click', '.new-task', (e) ->
     # event hold
     e.preventDefault()
     e.stopPropagation()
@@ -143,24 +143,20 @@ $ ->
       dayOptions = dayOptions.concat 'selected="selected" ' if day == curDay
       dayOptions = dayOptions.concat 'value="'+day+'">'+day+'</option>'
     $this.before(      
-      '<div class="task-info">
-        <h3>Task '+(index+1)+'</h3>
-        <div class="control-group string required">
-          <label class="string required control-label" for="project_task_'+index+'_name">
-            <abbr title="required">*</abbr> Label
-          </label>
+      '<fieldset class="task-info">
+        <legend></legend>
+        <div class="control-group string optional">
+          <label class="string optional control-label" for="project_task_'+index+'_name">Name</label>
           <div class="controls">
-            <input class="string required" id="project_task_'+index+'_name" name="project[task]['+index+'][name]" size="50" type="text" />
+            <input class="string optional" id="project_task_'+index+'_name" name="project[task]['+index+'][name]" size="50" type="text" />
           </div>
         </div>
-        <div class="control-group date required">
-          <label class="date required control-label" for="project_task_'+index+'_due_at_1i">
-            <abbr title="required">*</abbr> Due 
-          </label>
+        <div class="control-group date optional">
+          <label class="date optional control-label" for="project_task_'+index+'_due_at_1i">Deadline</label>
           <div class="controls">
-            <select class="date required" id="project_task_'+index+'_due_at_1i" name="project[task]['+index+'][due_at(1i)]">'+yearOptions+'</select>
-            <select class="date required" id="project_task_'+index+'_due_at_2i" name="project[task]['+index+'][due_at(2i)]">'+monthOptions+'</select>
-            <select class="date required" id="project_task_'+index+'_due_at_3i" name="project[task]['+index+'][due_at(3i)]">'+dayOptions+'</select>
+            <select class="date optional" id="project_task_'+index+'_due_at_1i" name="project[task]['+index+'][due_at(1i)]">'+yearOptions+'</select>
+            <select class="date optional" id="project_task_'+index+'_due_at_2i" name="project[task]['+index+'][due_at(2i)]">'+monthOptions+'</select>
+            <select class="date optional" id="project_task_'+index+'_due_at_3i" name="project[task]['+index+'][due_at(3i)]">'+dayOptions+'</select>
           </div>
         </div>
-      </div>')) 
+      </fieldset>')) 

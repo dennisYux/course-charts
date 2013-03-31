@@ -39,4 +39,11 @@ class User < ActiveRecord::Base
   def is_leader?(project)
     name == project.manager
   end
+
+  #
+  # return created_at or confirmed_at as needed
+  #
+  def registered_at
+    confirmed_at
+  end
 end

@@ -56,76 +56,104 @@ $ ->
 
     chartPrefix = 'chartset-';
 
+    ### chart user hours ###
+    
+    if dataset.user_hours != undefined
+      
+      # parse chart data
+      data = new google.visualization.DataTable
+      data.addColumn 'date', 'Date'
+      data.addColumn 'number', 'Total Hours' 
+      for point in dataset.user_hours
+        data.addRow [strToDate(point.date), point.total_hours]
+
+      # build chart hash
+      chart = 
+        type: 'ColumnChart'
+        data: data
+        options:
+          title: 'User Hours'
+        container: chartPrefix+'user-hours'
+
+      # draw chart
+      drawChart chart
+
     ### chart project hours ###
 
-    # parse chart data
-    data = new google.visualization.DataTable
-    data.addColumn 'date', 'Date'
-    data.addColumn 'number', 'Total Hours'
-    for point in dataset.project_hours
-      data.addRow [strToDate(point.date), point.total_hours]
+    if dataset.project_hours != undefined
 
-    # build chart hash
-    chart =
-      type: 'ColumnChart'
-      data: data
-      options:
-        title: 'Project Hours' 
-      container: chartPrefix+'project-hours'
+      # parse chart data
+      data = new google.visualization.DataTable
+      data.addColumn 'date', 'Date'
+      data.addColumn 'number', 'Total Hours'
+      for point in dataset.project_hours
+        data.addRow [strToDate(point.date), point.total_hours]
 
-    # draw chart
-    drawChart chart
+      # build chart hash
+      chart =
+        type: 'ColumnChart'
+        data: data
+        options:
+          title: 'Project Hours' 
+        container: chartPrefix+'project-hours'
+
+      # draw chart
+      drawChart chart
 
     ### chart tasks span ###
 
-    # parse chart data
-    data = new google.visualization.DataTable
-    data.addColumn 'string', 'Task'
-    data.addColumn 'number', 'Expected'
-    data.addColumn {type: 'number', role: 'interval'}
-    data.addColumn {type: 'number', role: 'interval'}
-    data.addColumn 'number', 'Practical'
-    data.addColumn {type: 'number', role: 'interval'}
-    data.addColumn {type: 'number', role: 'interval'}
-    for point in dataset.tasks_span
-      data.addRow [point.task, 0, point.create, point.due, 0, point.start, point.finish]
+    if dataset.tasks_span != undefined
 
-    # build chart hash
-    chart =
-      type: 'BarChart'
-      data: data
-      options:
-        title: 'Tasks Span' 
-      container: chartPrefix+'tasks-span'
+      # parse chart data
+      data = new google.visualization.DataTable
+      data.addColumn 'string', 'Task'
+      data.addColumn 'number', 'Expected'
+      data.addColumn {type: 'number', role: 'interval'}
+      data.addColumn {type: 'number', role: 'interval'}
+      data.addColumn 'number', 'Practical'
+      data.addColumn {type: 'number', role: 'interval'}
+      data.addColumn {type: 'number', role: 'interval'}
+      for point in dataset.tasks_span
+        data.addRow [point.task, 0, point.create, point.due, 0, point.start, point.finish]
 
-    # draw chart
-    drawChart chart
+      # build chart hash
+      chart =
+        type: 'BarChart'
+        data: data
+        options:
+          title: 'Tasks Span' 
+        container: chartPrefix+'tasks-span'
+
+      # draw chart
+      drawChart chart
 
     ### chart tasks hours ###
     
-    # parse chart data
-    data = new google.visualization.DataTable
-    data.addColumn 'string', 'Task'
-    data.addColumn 'number', 'Total Hours' 
-    for point in dataset.tasks_hours
-      data.addRow [point.task, point.total_hours]
+    if dataset.tasks_hours != undefined
 
-    # build chart hash
-    chart = 
-      type: 'PieChart'
-      data: data
-      options:
-        title: 'Tasks Hours'
-      container: chartPrefix+'tasks-hours'
+      # parse chart data
+      data = new google.visualization.DataTable
+      data.addColumn 'string', 'Task'
+      data.addColumn 'number', 'Total Hours' 
+      for point in dataset.tasks_hours
+        data.addRow [point.task, point.total_hours]
 
-    # draw chart
-    drawChart chart
+      # build chart hash
+      chart = 
+        type: 'PieChart'
+        data: data
+        options:
+          title: 'Tasks Hours'
+        container: chartPrefix+'tasks-hours'
+
+      # draw chart
+      drawChart chart
 
     ### other charts ###
 
   # decide whether to draw charts
   path = window.location.pathname
-  drawCharts path if path.match /^\/account\/projects\/\d+$/
+  drawCharts path # if ...
 
 # add task form
 $ ->

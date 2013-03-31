@@ -26,14 +26,35 @@ class UsersController < ApplicationController
 
     ### chart user hours ### 
 
-    from = user.registered_at.to_date.prev_week
-    to = Time.now.to_date.next_week
-    #
-    # always show the whole timeline 
-    # it should display the chart frame even if currently there is no data 
-    #   
+    # time period
+    from = user.registered_at.to_date
+    to = Time.now.to_date + 1.week
+    charts_data[:user_hours_from] = from 
+    charts_data[:user_hours_to] = to
+
+    # prepare data  
     charts_data[:user_hours] = groups_total_hours(current_user.records, from, to, 30)  
 
+    ### chart user submission ###
+
+    # time period
+    from = Time.now.to_date.prev_month
+    to = Time.now.to_date 
+    charts_data[:user_submission_from] = from 
+    charts_data[:user_submission_to] = to
+
+    # prepare data 
+    user_submission = []
+    user.projects.each do |project|
+      # records are grouped with project
+      records = project.records.where("records.created_at >= ? and user_id = ?", from, user.id)
+      records.each do |record|
+        user_submission << {project: project.name, date: record.created_at.to_date, 
+          time: record.created_at.strftime("%H-%M-%S"), hours: record.hours}
+      end
+    end
+    charts_data[:user_submission] = user_submission
+    
     charts_data.to_json
   end
 end

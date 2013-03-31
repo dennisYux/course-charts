@@ -1,6 +1,4 @@
 class Task < ActiveRecord::Base
-  require 'utilities'
-
   # attributes
   attr_accessible :name, :tag, :due_at
 

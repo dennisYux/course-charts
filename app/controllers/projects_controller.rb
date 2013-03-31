@@ -169,16 +169,24 @@ class ProjectsController < ApplicationController
 
     ### chart project hours ###    
 
-    from = project.created_at.to_date.prev_week
-    to = project.due_at.to_date.next_week
-    #
-    # always show the whole timeline 
-    # it should display the chart frame even if currently there is no data 
-    #
+    # time period
+    from = project.created_at.to_date
+    to = project.due_at.to_date + 1.week
+    charts_data[:project_hours_from] = from 
+    charts_data[:project_hours_to] = to
+
+    # prepare data  
     charts_data[:project_hours] = groups_total_hours(project.records, from, to, 30) 
 
     ### chart tasks span ###
 
+    # time period
+    from = project.created_at.to_date
+    to = project.due_at.to_date + 1.week
+    charts_data[:tasks_span_from] = from 
+    charts_data[:tasks_span_to] = to
+
+    # prepare data 
     tasks_span = []
     tasks = project.tasks
     tasks.each do |task|

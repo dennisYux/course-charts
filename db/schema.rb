@@ -15,12 +15,10 @@ ActiveRecord::Schema.define(:version => 20130326013241) do
 
   create_table "invitations", :force => true do |t|
     t.string   "invitation_token"
-    t.datetime "invitation_sent_at"
-    t.string   "invitation_accepted", :default => "no"
     t.string   "email"
     t.integer  "project_id"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "projects", :force => true do |t|

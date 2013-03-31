@@ -1,6 +1,4 @@
 class Project < ActiveRecord::Base
-  require 'utilities'
-
   # attributes
   attr_accessible :name, :description, :manager, :due_at
 

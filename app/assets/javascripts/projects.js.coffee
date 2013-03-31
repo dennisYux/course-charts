@@ -29,6 +29,13 @@ $ ->
     new Date date[0], date[1], date[2]
 
   #
+  # parse time string "23-59-59" to timeofday object
+  #
+  strToTime = (str) ->
+    time = str.split '-'
+    [(parseInt time[0]), (parseInt time[1]), (parseInt time[2])]
+
+  #
   # draw single chart
   #
   drawChart = (chart) ->
@@ -73,7 +80,44 @@ $ ->
         data: data
         options:
           title: 'User Hours'
+          hAxis:
+            viewWindow: 
+              min: strToDate dataset.user_hours_from
+              max: strToDate dataset.user_hours_to
         container: chartPrefix+'user-hours'
+
+      # draw chart
+      drawChart chart
+
+    ### chart user submission ###
+    
+    if dataset.user_submission != undefined
+      
+      # parse chart data
+      data = new google.visualization.DataTable
+      data.addColumn 'string', 'ID'
+      data.addColumn 'date', 'Date'
+      data.addColumn 'timeofday', 'Time' 
+      data.addColumn 'string', 'Project' 
+      data.addColumn 'number', 'Hours' 
+      for point in dataset.user_submission
+        console.log point
+        data.addRow ['', strToDate(point.date), strToTime(point.time), point.project, point.hours]
+
+      # build chart hash
+      chart = 
+        type: 'BubbleChart'
+        data: data
+        options:
+          title: 'User Records Submission'
+          hAxis:
+            viewWindow: 
+              min: strToDate dataset.user_submission_from
+              max: strToDate dataset.user_submission_to            
+          sizeAxis:
+            maxSize: 20
+            minSize: 2
+        container: chartPrefix+'user-submission'
 
       # draw chart
       drawChart chart
@@ -94,7 +138,11 @@ $ ->
         type: 'ColumnChart'
         data: data
         options:
-          title: 'Project Hours' 
+          title: 'Project Hours'
+          hAxis: 
+            viewWindow: 
+              min: strToDate dataset.project_hours_from
+              max: strToDate dataset.project_hours_to
         container: chartPrefix+'project-hours'
 
       # draw chart
@@ -114,8 +162,8 @@ $ ->
       data.addColumn {type: 'date', role: 'interval'}
       data.addColumn {type: 'date', role: 'interval'}
       for point in dataset.tasks_span
-        data.addRow [point.task, strToDate(point.create), strToDate(point.create), 
-        strToDate(point.due), strToDate(point.create), strToDate(point.start), strToDate(point.finish)]
+        data.addRow [point.task, strToDate(dataset.tasks_span_from), strToDate(point.create), 
+        strToDate(point.due), strToDate(dataset.tasks_span_from), strToDate(point.start), strToDate(point.finish)]
 
       # build chart hash
       chart =
@@ -124,8 +172,9 @@ $ ->
         options:
           title: 'Tasks Span'
           hAxis:
-            viewWindow: {min: strToDate(point.create)}
-            viewWindowMode: 'explicit'
+            viewWindow: 
+              min: strToDate dataset.tasks_span_from
+              max: strToDate dataset.tasks_span_to
         container: chartPrefix+'tasks-span'
 
       # draw chart

@@ -1,20 +1,20 @@
 <div class="row">
   <%= render "shared/account_nav" %>
   <div class="span10">
-    <section class="project-section">
+    <section class="section-fieldset">
       <fieldset>
         <legend><%= @project.name.upcase %></legend>
         <p><%= @project.description %></p>  
         <%= render "project" %>
       </fieldset>
     </section> 
-    <section id="activities" class="project-section">
+    <section id="activities" class="section-fieldset">
       <fieldset>
         <legend>Activities</legend> 
         <%= render "log" %>
       </fieldset>
     </section>  
-    <section id="charts" class="project-section">
+    <section id="charts" class="section-fieldset">
       <fieldset>
         <legend>Charts</legend>
         <div class="div-chart" id="chartset-project-hours"></div>
@@ -22,7 +22,7 @@
         <div class="div-chart" id="chartset-tasks-hours"></div>
       </fieldset>  
     </section>  
-    <section id="tool-box" class="project-section">
+    <section id="tool-box" class="section-fieldset">
       <fieldset>
         <legend>Tool Box</legend>
         <%= render "team" %>

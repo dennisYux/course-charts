@@ -35,4 +35,8 @@ class User < ActiveRecord::Base
   def history_projects
     projects.where("due_at < ?", Time.now.weeks_ago(1))
   end
+
+  def is_leader?(project)
+    name == project.manager
+  end
 end

@@ -1,0 +1,7 @@
+<% @history_projects.each_index do |i| %>
+  <%= raw '<div class="row-fluid tr">' if i%4 == 0 %>
+  <div class="span3">
+    <%= smart_link_to @history_projects[i] %>
+  </div>    
+  <%= raw '</div>' if i%4 == 0 %> 
+<% end %>

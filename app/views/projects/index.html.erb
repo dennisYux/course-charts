@@ -1,21 +1,17 @@
 <div class="row">
   <%= render "shared/account_nav" %>
   <div class="span10">
-    <fieldset>
-      <legend>In progress</legend>
-      <% @projects.each do |project| %>
-      <div class='span4'>
-        <%= link_to project.name, project %>
-      </div>
-      <% end %>
-    </fieldset>
-    <fieldset>
-      <legend>History</legend>
-      <% @projects.each do |project| %>
-      <div class='span2'>
-        <%= link_to project.name, project %>
-      </div>
-      <% end %>
-    </fieldset>
+    <section class="section-fieldset">
+      <fieldset>
+        <legend>In progress</legend>        
+        <%= render "progress" %>
+      </fieldset>
+    </section>
+    <section class="section-fieldset">
+      <fieldset>
+        <legend>History</legend>   
+        <%= render "history" %>        
+      </fieldset>
+    </section>
   </div>
 </div>

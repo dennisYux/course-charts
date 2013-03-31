@@ -2,6 +2,21 @@
 # project js manipulations are here
 #
 
+# css stuff
+$ ->
+  # common constants
+  grey = '#F6F6F6'
+
+  # set section padding
+  $('.section-fieldset').filter(':first').css('padding-top', 0)
+  $('.section-fieldset').filter(':last').css('margin-bottom', 0)
+
+  # span indentation
+  $('.row-fluid > .span6').filter(':even').css('margin-left', 0)
+
+  # row background color
+  $('.row-fluid.tr').filter(':even').css(background: grey)
+
 google.load "visualization", "1", {packages: ["corechart"]}
 
 # draw charts
@@ -178,13 +193,5 @@ $ ->
           </div>
         </div>
       </div>'))
-
-# set section padding
-$ ->
-  $('section.project-section').filter(':first').css('padding-top', 0)
-  $('section.project-section').filter(':last').css('margin-bottom', 0)
-
-
-
 
 

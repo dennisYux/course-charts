@@ -1,15 +1,17 @@
 <div class="row">
   <%= render "shared/account_nav" %>
   <div class="span10">
-  <% if @projects.any? %>
-    <h3>In Progress</h3>
-    <% @projects.each do |project| %>
-      <div class='span3'>
-        <%= link_to project.name, project %>
-      </div>
-    <% end %>
-  <% else %>
-    <p>There is no project</p>
-  <% end %>
+    <section class="section-fieldset">
+      <fieldset>
+        <legend><%= @user.name %></legend>        
+        <%= @user.email %>
+      </fieldset>
+    </section>
+    <section class="section-fieldset">
+      <fieldset>
+        <legend>History</legend>   
+                
+      </fieldset>
+    </section>
   </div>
 </div>

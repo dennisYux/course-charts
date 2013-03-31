@@ -3,7 +3,9 @@ class ProjectsController < ApplicationController
   
   # GET /projects
   def index
-    @projects = Project.all
+    @user = current_user
+    @in_progress_projects = @user.in_progress_projects
+    @history_projects = @user.history_projects
   end
 
   # GET /projects/1

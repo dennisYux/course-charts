@@ -17,6 +17,11 @@ class Project < ActiveRecord::Base
   # callbacks
   before_save :fill_due_at
 
+  def percent
+    percent = (((Time.now - created_at)/(due_at - created_at))*100).to_i
+    percent > 100 ? 100 : percent
+  end
+
   private
   
   def fill_due_at

@@ -1,4 +1,4 @@
-<div class="project-info-table">
+<div class="div-list">
   <div class="row-fluid">
     <div class="span6">
       <p><b>Tasks</b></p>
@@ -8,12 +8,10 @@
     </div>
     <div class="span6">
       <p><b>Leader</b></p>
-      <% @leader.name << ' <i class="icon-bookmark-empty"></i>' if @leader == current_user %>
-      <p><%= raw @leader.name %></p>
+      <p><%= @leader.name %></p>
       <p><b>Members</b></p>
       <% @members.each do |member| %>
-        <% member.name << ' <i class="icon-bookmark-empty"></i>' if member == current_user %>
-        <p><%= raw member.name %></p>
+        <p><%= member.name %></p>
       <% end %>
     </div>   
   </div>

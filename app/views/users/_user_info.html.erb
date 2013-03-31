@@ -1,0 +1,27 @@
+<table class="table table-striped no-padding">
+  <thead>    
+    <tr>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><i class="icon-bookmark"></i></td>
+      <td>Total Projects</td>
+      <td><b><%= @projects.count %></b></td>
+      <td></td>
+      <td><i class="icon-pencil"></i></td> 
+      <td>Total Submission</td>     
+      <td><b><%= @records.count %></b></td>
+    </tr>
+    <tr>
+      <td><i class="icon-map-marker"></i></td>
+      <td>Total Leader Projects</td>
+      <td><b><%= @leader_projects.count %></b></td>
+      <td></td>
+      <td><i class="icon-time"></i></td>
+      <td>Total Hours</td>
+      <td><b><%= @records.sum("hours") %></b></td>
+    </tr>
+  </tbody>  
+</table>

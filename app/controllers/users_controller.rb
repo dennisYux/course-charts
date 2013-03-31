@@ -8,9 +8,10 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
-    @projects = @user.in_progress_projects
-    @tasks = @projects.any? ? @projects.first.tasks : Task.new
-    @record = Record.new
+    @projects = @user.projects
+    @in_progress_projects = @user.in_progress_projects
+    @leader_projects = @user.projects.where("manager = ?", @user.name)
+    @records = @user.records
 
     respond_to do |format|
       format.html { render action: 'show' }

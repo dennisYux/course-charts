@@ -25,8 +25,7 @@ Boarder::Application.routes.draw do
     resources :projects do
       resource :team, only: [:create, :show]    
       resources :records, only: [:create]
-    end    
-    resource :report, only: [:show], as: 'account_report'
+    end
   end
 
   #get '/about', to: 'about#index', as: :about

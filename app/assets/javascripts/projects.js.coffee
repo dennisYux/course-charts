@@ -101,7 +101,6 @@ $ ->
       data.addColumn 'string', 'Project' 
       data.addColumn 'number', 'Hours' 
       for point in dataset.user_submission
-        console.log point
         data.addRow ['', strToDate(point.date), strToTime(point.time), point.project, point.hours]
 
       # build chart hash
@@ -198,6 +197,38 @@ $ ->
         options:
           title: 'Tasks Hours'
         container: chartPrefix+'tasks-hours'
+
+      # draw chart
+      drawChart chart
+
+    ### chart tasks submission ###
+    
+    if dataset.tasks_submission != undefined
+      
+      # parse chart data
+      data = new google.visualization.DataTable
+      data.addColumn 'string', 'ID'
+      data.addColumn 'date', 'Date'
+      data.addColumn 'timeofday', 'Time' 
+      data.addColumn 'string', 'Task' 
+      data.addColumn 'number', 'Hours' 
+      for point in dataset.tasks_submission
+        data.addRow ['', strToDate(point.date), strToTime(point.time), point.task, point.hours]
+
+      # build chart hash
+      chart = 
+        type: 'BubbleChart'
+        data: data
+        options:
+          title: 'Tasks Submission'
+          hAxis:
+            viewWindow: 
+              min: strToDate dataset.tasks_submission_from
+              max: strToDate dataset.tasks_submission_to            
+          sizeAxis:
+            maxSize: 20
+            minSize: 2
+        container: chartPrefix+'tasks-submission'
 
       # draw chart
       drawChart chart

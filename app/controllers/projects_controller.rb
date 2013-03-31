@@ -208,15 +208,40 @@ class ProjectsController < ApplicationController
 
     ### chart tasks hours ###
 
+    # prepare data 
     tasks_hours = []
     #
-    # at least a task has to be specified at the project creation
+    # at least one task has to be specified on the project creation
     #
     tasks = project.tasks
     tasks.each do |task|
       tasks_hours << {task: 'Task '+(task.tag+1).to_s, total_hours: task.records.sum("hours")}
     end
     charts_data[:tasks_hours] = tasks_hours
+
+    ### chart tasks submission ###
+
+    # time period
+    from = project.created_at.to_date
+    to = project.due_at.to_date + 1.week
+    charts_data[:tasks_submission_from] = from 
+    charts_data[:tasks_submission_to] = to
+
+    # prepare data 
+    tasks_submission = []
+    #
+    # at least one task has to be specified on the project creation
+    #
+    tasks = project.tasks
+    tasks.each do |task|
+      # records (submitted by all team members) are grouped with task
+      records = task.records.where("records.created_at >= ?", from)
+      records.each do |record|
+        tasks_submission << {task: task.name, date: record.created_at.to_date, 
+          time: record.created_at.strftime("%H-%M-%S"), hours: record.hours}
+      end
+    end
+    charts_data[:tasks_submission] = tasks_submission
 
     charts_data.to_json
   end

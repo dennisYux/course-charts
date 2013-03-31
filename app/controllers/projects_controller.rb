@@ -167,8 +167,8 @@ class ProjectsController < ApplicationController
   def charts_data_for(project)
     charts_data = {}
 
-    ### chart project hours ###
-    
+    ### chart project hours ###    
+
     from = project.created_at.to_date.prev_week
     to = project.due_at.to_date.next_week
     #
@@ -178,6 +178,7 @@ class ProjectsController < ApplicationController
     charts_data[:project_hours] = groups_total_hours(project.records, from, to, 30) 
 
     ### chart tasks span ###
+
     tasks_span = []
     tasks = project.tasks
     tasks.each do |task|
@@ -185,17 +186,20 @@ class ProjectsController < ApplicationController
       #
       # task expected time span from task creation to due
       # task practical time span from first record creation to last record creation
-      # time is translated into days since project creation
       #
-      tasks_span << {task: 'Task '+(task.tag+1).to_s,
-        create: days_difference(task.created_at, project.created_at),
-        due: days_difference(task.due_at, project.created_at),
-        start: days_difference(records.minimum("created_at"), project.created_at),
-        finish: days_difference(records.maximum("created_at"), project.created_at)}
+      tasks_span << {task: 'Task '+(task.tag+1).to_s, create: task.created_at.to_date, due: task.due_at.to_date,
+        start: records.minimum("created_at").to_date, finish: records.maximum("created_at").to_date}
     end
+
+    # add extra data for the whole project
+    records = project.records
+    tasks_span.unshift({task: 'Project', create: project.created_at.to_date, due: project.due_at.to_date,
+      start: records.minimum("created_at").to_date, finish: records.maximum("created_at").to_date})
+
     charts_data[:tasks_span] = tasks_span
 
     ### chart tasks hours ###
+
     tasks_hours = []
     #
     # at least a task has to be specified at the project creation
@@ -207,11 +211,5 @@ class ProjectsController < ApplicationController
     charts_data[:tasks_hours] = tasks_hours
 
     charts_data.to_json
-  end
-
-  def days_difference(time1, time2)
-    # in case there is no record in task
-    return 0 if time1.nil?
-    (time1.to_date-time2.to_date).to_i
   end
 end

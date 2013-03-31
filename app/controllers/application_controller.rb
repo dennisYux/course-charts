@@ -23,8 +23,7 @@ class ApplicationController < ActionController::Base
       # break if time period of current row is out of time area delimited by from and to  
       break if from > i_to
       date = i_to - days / 2
-      total_hours = records.where("date(records.created_at) > ? and date(records.created_at) <= ?", i_from, i_to)
-                           .sum("hours")
+      total_hours = records.where("date(records.created_at) > ? and date(records.created_at) <= ?", i_from, i_to).sum("hours")
       groups_total_hours << {date: date, total_hours: total_hours}
     end
     groups_total_hours    

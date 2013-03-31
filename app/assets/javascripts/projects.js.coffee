@@ -107,21 +107,25 @@ $ ->
       # parse chart data
       data = new google.visualization.DataTable
       data.addColumn 'string', 'Task'
-      data.addColumn 'number', 'Expected'
-      data.addColumn {type: 'number', role: 'interval'}
-      data.addColumn {type: 'number', role: 'interval'}
-      data.addColumn 'number', 'Practical'
-      data.addColumn {type: 'number', role: 'interval'}
-      data.addColumn {type: 'number', role: 'interval'}
+      data.addColumn 'date', 'Expected'
+      data.addColumn {type: 'date', role: 'interval'}
+      data.addColumn {type: 'date', role: 'interval'}
+      data.addColumn 'date', 'Practical'
+      data.addColumn {type: 'date', role: 'interval'}
+      data.addColumn {type: 'date', role: 'interval'}
       for point in dataset.tasks_span
-        data.addRow [point.task, 0, point.create, point.due, 0, point.start, point.finish]
+        data.addRow [point.task, strToDate(point.create), strToDate(point.create), 
+        strToDate(point.due), strToDate(point.create), strToDate(point.start), strToDate(point.finish)]
 
       # build chart hash
       chart =
         type: 'BarChart'
         data: data
         options:
-          title: 'Tasks Span' 
+          title: 'Tasks Span'
+          hAxis:
+            viewWindow: {min: strToDate(point.create)}
+            viewWindowMode: 'explicit'
         container: chartPrefix+'tasks-span'
 
       # draw chart

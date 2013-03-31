@@ -13,10 +13,12 @@
     <% if !@navigation_tags.nil? %>
       <li class="divider"></li> 
       <li class="nav-header">Navigation Tag</li> 
-      <li><a href="#"><i class="icon-circle-arrow-right"></i> Brief</a></li>
+      <li><a href="#"><i class="icon-circle-arrow-right"></i> Page Top</a></li>
       <li><a href="#activities"><i class="icon-circle-arrow-right"></i> Activities</a></li>
       <li><a href="#charts"><i class="icon-circle-arrow-right"></i> Charts</a></li>  
       <li><a href="#tool-box"><i class="icon-circle-arrow-right"></i> Tool Box</a></li>
+      <li class="divider"></li> 
+      <li><%= link_to raw('<i class="icon-pencil"></i> Edit'), edit_project_path %></li>
     <% end %>
   </ul>
 </div>

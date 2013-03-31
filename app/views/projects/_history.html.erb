@@ -1,7 +1,16 @@
-<% @history_projects.each_index do |i| %>
-  <%= raw '<div class="row-fluid tr">' if i%4 == 0 %>
-  <div class="span3">
-    <%= smart_link_to @history_projects[i] %>
-  </div>    
-  <%= raw '</div>' if i%4 == 0 %> 
-<% end %>
+<table class="table table-striped no-padding">
+  <thead>    
+    <tr>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @history_projects.in_groups_of(4, false) do |projects| %>
+      <tr>
+        <% projects.each do |project| %>      
+          <td><%= smart_link_to project %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>  
+</table>

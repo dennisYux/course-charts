@@ -215,7 +215,7 @@ class ProjectsController < ApplicationController
     #
     tasks = project.tasks
     tasks.each do |task|
-      tasks_hours << {task: 'Task '+(task.tag+1).to_s, total_hours: task.records.sum("hours")}
+      tasks_hours << {task: task.name, total_hours: task.records.sum("hours")}
     end
     charts_data[:tasks_hours] = tasks_hours
 

@@ -21,7 +21,7 @@
       <td></td>
       <td><i class="icon-time"></i></td>
       <td>Total Hours</td>
-      <td><b><%= @records.sum("hours") %></b></td>
+      <td><b><%= @records.sum("hours").round(1) %></b></td>
     </tr>
   </tbody>  
 </table>

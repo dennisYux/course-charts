@@ -12,33 +12,60 @@ YAML.load(ENV['ROLES']).each do |role|
   Role.find_or_create_by_name({ :name => role }, :without_protection => true)
   puts 'role: ' << role
 end
-puts 'DEFAULT USERS AND THEIR PROJECTS'
+puts 'DEFAULT USERS'
 #user = User.find_or_create_by_email :name => ENV['ADMIN_NAME'].dup, :email => ENV['ADMIN_EMAIL'].dup, :password => ENV['ADMIN_PASSWORD'].dup, :password_confirmation => ENV['ADMIN_PASSWORD'].dup
 #puts 'user: ' << user.name
 #user.confirm!
 #user.add_role :admin
-users = [{name: 'Jack', email: 'jack@example.com', password: '12345678', password_confirmation: '12345678'},
-{name: 'Rose', email: 'rose@example.com', password: '12345678', password_confirmation: '12345678'}]
-projects = [{name: 'CSI 5100', description: 'Software testing techniques', manager: 'Jack', due_at: DateTime.new(2013,6,1,23,59,59)},
-{name: 'ELG 5369', description: 'Internetworking techniques', manager: 'Rose', due_at: DateTime.new(2013,5,1,23,59,59)},
-{name: 'ELG 5111', description: 'Multimedia techniques', manager: 'Jack', due_at: DateTime.new(2012,12,1,23,59,59)}]
-tasks = [{name: 'inception', tag: 0, due_at: DateTime.new(2013,4,1,23,59,59)},
-{name: 'elaboration', tag: 1, due_at: DateTime.new(2013,4,15,23,59,59)},
-{name: 'implementation', tag: 2, due_at: DateTime.new(2013,5,1,23,59,59)},
-{name: 'production', tag: 3, due_at: DateTime.new(2013,5,15,23,59,59)}]
-users.each do |u|
+users = {'0' => {name: 'Jack', email: 'jack@example.com', password: '12345678', password_confirmation: '12345678'},
+         '1' => {name: 'Rose', email: 'rose@example.com', password: '12345678', password_confirmation: '12345678'}}
+created_at = [DateTime.new(2011,7,26,17,25,0), DateTime.new(2011,8,11,11,50,0)]
+confirmed_at = [DateTime.new(2011,7,26,17,26,0), DateTime.new(2011,8,11,11,51,0)]
+users.each do |i, u|
   user = User.find_or_create_by_name(name: u[:name], email: u[:email], password: u[:password], password_confirmation: u[:password_confirmation])
-  puts 'user: ' << user.name
   user.confirm!
-  projects.each do |p|
-    project = Project.find_or_create_by_name(name: p[:name], description: p[:description], manager: p[:manager], due_at: p[:due_at])
-    # find_or_create does not build JOIN associations
+  user.created_at = created_at[i.to_i]
+  user.confirmed_at = confirmed_at[i.to_i]
+  user.save
+  puts 'user: ' << user.name
+end
+puts 'DEFAULT PROJECTS AND TASKS'
+projects = {'0' => {name: 'CSI 5111', description: 'Software Quality Engineering', manager: 'Jack'},
+            '1' => {name: 'ELG 5369', description: 'Internetworking Technologies', manager: 'Rose'},
+            '2' => {name: 'ELG 5100', description: 'Software Engineering Project Management', manager: 'Jack'}}
+tasks = {'0' => {name: 'inception', tag: 0}, '1' => {name: 'elaboration', tag: 1}, 
+         '2' => {name: 'implementation', tag: 2}, '3' => {name: 'production', tag: 3}}
+created_at = [DateTime.new(2011,9,25,10,0,0), DateTime.new(2011,10,4,14,30,0), DateTime.new(2013,2,1,21,15,0)]
+due_at = [DateTime.new(2011,12,15,0,0,0), DateTime.new(2011,12,10,0,0,0), DateTime.new(2013,5,1,0,0,0)]
+tasks_created_at = []
+tasks_due_at = []
+tasks_created_at << [DateTime.new(2011,9,27,16,25,0), DateTime.new(2011,10,4,21,30,0), DateTime.new(2013,2,5,13,35,0)]
+tasks_due_at << [DateTime.new(2011,10,15,0,0,0), DateTime.new(2011,10,21,0,0,0), DateTime.new(2013,2,20,0,0,0)]
+tasks_created_at << [DateTime.new(2011,10,2,11,55,0), DateTime.new(2011,10,18,1,30,0), DateTime.new(2013,2,22,23,35,0)]
+tasks_due_at << [DateTime.new(2011,11,15,0,0,0), DateTime.new(2011,11,1,0,0,0), DateTime.new(2013,3,10,0,0,0)]
+tasks_created_at << [DateTime.new(2011,11,17,8,45,0), DateTime.new(2011,11,4,22,35,0), DateTime.new(2013,3,5,22,15,0)]
+tasks_due_at << [DateTime.new(2011,11,30,0,0,0), DateTime.new(2011,12,1,0,0,0), DateTime.new(2013,4,5,0,0,0)]
+tasks_created_at << [DateTime.new(2011,11,27,13,25,0), DateTime.new(2011,11,27,20,10,0), DateTime.new(2013,3,28,11,55,0)]
+tasks_due_at << [DateTime.new(2011,12,15,0,0,0), DateTime.new(2011,12,10,0,0,0), DateTime.new(2013,5,1,0,0,0)]
+projects.each do |i, p|
+  project = Project.find_or_create_by_name(name: p[:name], description: p[:description], manager: p[:manager], due_at: DateTime.new(2013,1,1))
+  project.created_at = created_at[i.to_i]
+  project.due_at = due_at[i.to_i]
+  project.save
+  puts 'project: ' << project.name
+  tasks.each do |j, t|
+    task = project.tasks.find_or_create_by_name(name: t[:name], tag: t[:tag], due_at: DateTime.new(2013,1,1))
+    task.created_at = tasks_created_at[j.to_i][i.to_i]
+    task.due_at = tasks_due_at[j.to_i][i.to_i]
+    task.save
+    puts 'task: ' << task.name
+  end
+end
+users = User.all
+projects = Project.all
+users.each do |user|
+  projects.each do |project|
     user.projects << project
-    puts 'project: ' << project.name
-    tasks.each do |t|
-      task = project.tasks.find_or_create_by_name(name: t[:name], tag: t[:tag], due_at: t[:due_at])
-      puts 'task: ' << task.name
-    end
   end
 end
 puts 'DEFAULT RECORDS'
@@ -56,7 +83,8 @@ end
   record = Record.create(description: 'one record', hours: (rand()*8).round(1))
   record.user_id = users_ids.sample
   record.task_id = tasks_ids.sample
-  record.created_at = Time.at(Time.now + rand(Time.now.months_since(2).to_f - Time.now.to_f))
+  task = Task.find(record.task_id)
+  record.created_at = Time.at(task.created_at + rand(task.due_at.to_f - task.created_at.to_f))
   record.save
   print '.'
 end

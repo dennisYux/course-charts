@@ -1,4 +1,24 @@
 #
+# application and account js manipulations are here
+#
+
+# set sidebar width once it is affixed
+$ ->
+  sidebarWidth = $('#account-sidebar').width() - parseInt($('#account-sidebar').css('paddingLeft')) \
+    - parseInt($('#account-sidebar').css('paddingRight')) 
+  $('#account-sidenav').css('width', sidebarWidth)
+
+# activize sidebar
+$ ->
+  path = window.location.pathname
+  $items = $('#account-sidenav > li').has('a')
+  if path.match /^\/account$/ then $items.eq(0).addClass('active')
+  else if path.match /^\/account\/edit$/ then $items.eq(1).addClass('active')
+  else if path.match /^\/account\/projects\/new$/ then $items.eq(3).addClass('active')
+  else if path.match /^\/account\/projects/ then $items.eq(2).addClass('active')
+  else if path.match /^\/account\/submission/ then $items.eq(4).addClass('active')
+
+#
 # project js manipulations are here
 #
 
@@ -16,6 +36,9 @@ $ ->
 
   # row background color
   $('.row-fluid.tr').filter(':even').css(background: grey)
+
+  # chart div
+  $('.div-chart').css('height', ($('.div-chart').width()/2))
 
 # add task form
 $ ->
@@ -304,4 +327,5 @@ $ ->
 
   # decide whether to draw charts
   path = window.location.pathname
-  drawCharts path # if ...
+  drawCharts path if path.match /^\/account$/  
+  drawCharts path if path.match /^\/account\/projects\/\d+$/

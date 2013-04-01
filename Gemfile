@@ -31,4 +31,5 @@ gem "better_errors", ">= 0.6.0", :group => :development
 gem "binding_of_caller", ">= 0.7.1", :group => :development, :platforms => [:mri_19, :rbx]
 gem "libv8", ">= 3.11.8"
 gem "therubyracer", ">= 0.11.3", :group => :assets, :platform => :ruby, :require => "v8"
-gem 'font-awesome-sass-rails', ">=3.0.2.2"
+gem "font-awesome-sass-rails", ">=3.0.2.2"
+gem "newrelic_rpm"

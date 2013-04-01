@@ -1,5 +1,5 @@
 Course Charts
 =============
-It is intended to help students get a basic overview of their course projects by providing statistical charts.  
+To provide statistical charts for students' course projects. Still in development ...
 
-Still in development ...
+A quick glance at the site http://boarder.herokuapp.com/

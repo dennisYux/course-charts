@@ -1,7 +1,7 @@
 <%= form_tag project_team_path(@project), class: "form-horizontal" do %>  
   <div class="form-inputs">
-    <div class="row">
-      <div class="span5">
+    <div class="row-fluid">
+      <div class="span6">
         <div class="email-info">
           <div class="control-group string optional">
             <%= label_tag "email_0", "Email", class: "string optional control-label"%>
@@ -10,9 +10,9 @@
             </div>
           </div>
         </div>  
-        <a class="new-email" href="#">Add more</a>
+        <p><a class="new-email" href="#">Add more</a></p>
       </div>
-      <div class="span5">
+      <div class="span6">
         <p>Invite collaborators via sending them emails</p>
       </div>
     </div>

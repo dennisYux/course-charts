@@ -1,12 +1,12 @@
 <div class="div-list">
   <div class="row-fluid">
-    <div class="span6">
+    <div class="span3">
       <p><b>Tasks</b></p>
       <% @tasks.each do |task| %>
         <p><%= task.name %></p>
       <% end %>
     </div>
-    <div class="span6">
+    <div class="span3 offset3">
       <p><b>Leader</b></p>
       <p><%= @leader.name %></p>
       <p><b>Members</b></p>

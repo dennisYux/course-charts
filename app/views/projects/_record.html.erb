@@ -1,7 +1,7 @@
 <%= simple_form_for @record, url: project_records_path(@project), defaults: { required: false }, html: { class: "form-horizontal"} do |f| %>
   <div class="form-inputs">
-    <div class="row">
-      <div class="span5">
+    <div class="row-fluid">
+      <div class="span6">
         <div class="control-group string optional">
           <%= label_tag "task", "Tasks", class: "string optional control-label"%>
           <div class="controls">
@@ -11,7 +11,7 @@
         <%= f.input :hours %>
         <%= f.input :description %>
       </div>
-      <div class="span5">
+      <div class="span6">
         <p>Submit daily work here</p>
       </div>
     </div>

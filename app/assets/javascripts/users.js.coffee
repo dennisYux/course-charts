@@ -16,3 +16,8 @@ $ ->
   else if path.match /^\/account\/edit$/ then $items.eq(1).addClass('active')
   else if path.match /^\/account\/projects\/new$/ then $items.eq(3).addClass('active')
   else if path.match /^\/account\/projects/ then $items.eq(2).addClass('active')
+
+# chart div
+$ ->
+  $('.div-chart').css('height', ($('.div-chart').width()/2))
+

@@ -19,7 +19,7 @@ body
   @include form-horizontal(200px)
 
 .progress
-  height: 40px
+  height: 20px
   margin-right: 0
 
 .row-fluid.tr
@@ -27,4 +27,16 @@ body
 
 table.no-padding
   td
+    padding-left: 0
+
+// Tablet
+@media (max-width: 767px)
+  .bs-docs-sidenav.affix
+    position: static
+    width: auto
+    top: 0
+
+// Phone    
+@media (max-width: 480px)
+  .form-horizontal .form-actions
     padding-left: 0

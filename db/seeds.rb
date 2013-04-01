@@ -7,16 +7,16 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 # Environment variables (ENV['...']) are set in the file config/application.yml.
 # See http://railsapps.github.com/rails-environment-variables.html
-puts 'ROLES'
-YAML.load(ENV['ROLES']).each do |role|
-  Role.find_or_create_by_name({ :name => role }, :without_protection => true)
-  puts 'role: ' << role
-end
+# puts 'ROLES'
+# YAML.load(ENV['ROLES']).each do |role|
+#   Role.find_or_create_by_name({ :name => role }, :without_protection => true)
+#   puts 'role: ' << role
+# end
 puts 'DEFAULT USERS'
-#user = User.find_or_create_by_email :name => ENV['ADMIN_NAME'].dup, :email => ENV['ADMIN_EMAIL'].dup, :password => ENV['ADMIN_PASSWORD'].dup, :password_confirmation => ENV['ADMIN_PASSWORD'].dup
-#puts 'user: ' << user.name
-#user.confirm!
-#user.add_role :admin
+# user = User.find_or_create_by_email :name => ENV['ADMIN_NAME'].dup, :email => ENV['ADMIN_EMAIL'].dup, :password => ENV['ADMIN_PASSWORD'].dup, :password_confirmation => ENV['ADMIN_PASSWORD'].dup
+# puts 'user: ' << user.name
+# user.confirm!
+# user.add_role :admin
 users = {'0' => {name: 'Jack', email: 'jack@example.com', password: '12345678', password_confirmation: '12345678'},
          '1' => {name: 'Rose', email: 'rose@example.com', password: '12345678', password_confirmation: '12345678'}}
 created_at = [DateTime.new(2011,7,26,17,25,0), DateTime.new(2011,8,11,11,50,0)]

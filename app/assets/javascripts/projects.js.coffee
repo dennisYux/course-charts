@@ -17,6 +17,73 @@ $ ->
   # row background color
   $('.row-fluid.tr').filter(':even').css(background: grey)
 
+# add task form
+$ ->
+  $('.form-inputs').on('click', '.new-task', (e) ->
+    # event hold
+    e.preventDefault()
+    e.stopPropagation()
+    # auxiliary parameters
+    $this = $(this)
+    index = $('.task-info').length
+    today = new Date()
+    curYear = today.getFullYear()
+    curMonth = today.getMonth()
+    curDay = today.getDate()
+    monthNames = ['NA', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    # selector options
+    yearOptions = ''
+    for year in [(curYear-5)..(curYear+5)]
+      yearOptions = yearOptions.concat '<option '
+      yearOptions = yearOptions.concat 'selected="selected" ' if year == curYear
+      yearOptions = yearOptions.concat 'value="'+year+'">'+year+'</option>'
+    monthOptions = ''
+    for month in [1..12]
+      monthOptions = monthOptions.concat '<option '
+      monthOptions = monthOptions.concat 'selected="selected" ' if month == curMonth+1
+      monthOptions = monthOptions.concat 'value="'+month+'">'+monthNames[month]+'</option>'
+    dayOptions = ''
+    for day in [1..31]
+      dayOptions = dayOptions.concat '<option '
+      dayOptions = dayOptions.concat 'selected="selected" ' if day == curDay
+      dayOptions = dayOptions.concat 'value="'+day+'">'+day+'</option>'
+    $this.before(      
+      '<fieldset class="task-info">
+        <legend></legend>
+        <div class="control-group string optional">
+          <label class="string optional control-label" for="project_task_'+index+'_name">Name</label>
+          <div class="controls">
+            <input class="string optional" id="project_task_'+index+'_name" name="project[task]['+index+'][name]" size="50" type="text" />
+          </div>
+        </div>
+        <div class="control-group date optional">
+          <label class="date optional control-label" for="project_task_'+index+'_due_at_1i">Deadline</label>
+          <div class="controls">
+            <select class="date optional" id="project_task_'+index+'_due_at_1i" name="project[task]['+index+'][due_at(1i)]">'+yearOptions+'</select>
+            <select class="date optional" id="project_task_'+index+'_due_at_2i" name="project[task]['+index+'][due_at(2i)]">'+monthOptions+'</select>
+            <select class="date optional" id="project_task_'+index+'_due_at_3i" name="project[task]['+index+'][due_at(3i)]">'+dayOptions+'</select>
+          </div>
+        </div>
+      </fieldset>'))
+
+# add email form
+$ ->
+  $('.form-inputs').on('click', '.new-email', (e) ->
+    # event hold
+    e.preventDefault()
+    e.stopPropagation()
+    $this = $(this)    
+    index = $('.email-info').length
+    $this.before(      
+      '<div class="email-info">
+        <div class="control-group string optional">
+          <label class="string optional control-label" for="email_'+index+'">Email</label>
+          <div class="controls">
+            <input id="email_'+index+'" name="email['+index+']" type="text" />
+          </div>
+        </div>
+      </div>'))
+  
 google.load "visualization", "1", {packages: ["corechart"]}
 
 # draw charts
@@ -238,72 +305,3 @@ $ ->
   # decide whether to draw charts
   path = window.location.pathname
   drawCharts path # if ...
-
-# add task form
-$ ->
-  $('.form-inputs').on('click', '.new-task', (e) ->
-    # event hold
-    e.preventDefault()
-    e.stopPropagation()
-    # auxiliary parameters
-    $this = $(this)
-    index = $('.task-info').length
-    today = new Date()
-    curYear = today.getFullYear()
-    curMonth = today.getMonth()
-    curDay = today.getDate()
-    monthNames = ['NA', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    # selector options
-    yearOptions = ''
-    for year in [(curYear-5)..(curYear+5)]
-      yearOptions = yearOptions.concat '<option '
-      yearOptions = yearOptions.concat 'selected="selected" ' if year == curYear
-      yearOptions = yearOptions.concat 'value="'+year+'">'+year+'</option>'
-    monthOptions = ''
-    for month in [1..12]
-      monthOptions = monthOptions.concat '<option '
-      monthOptions = monthOptions.concat 'selected="selected" ' if month == curMonth+1
-      monthOptions = monthOptions.concat 'value="'+month+'">'+monthNames[month]+'</option>'
-    dayOptions = ''
-    for day in [1..31]
-      dayOptions = dayOptions.concat '<option '
-      dayOptions = dayOptions.concat 'selected="selected" ' if day == curDay
-      dayOptions = dayOptions.concat 'value="'+day+'">'+day+'</option>'
-    $this.before(      
-      '<fieldset class="task-info">
-        <legend></legend>
-        <div class="control-group string optional">
-          <label class="string optional control-label" for="project_task_'+index+'_name">Name</label>
-          <div class="controls">
-            <input class="string optional" id="project_task_'+index+'_name" name="project[task]['+index+'][name]" size="50" type="text" />
-          </div>
-        </div>
-        <div class="control-group date optional">
-          <label class="date optional control-label" for="project_task_'+index+'_due_at_1i">Deadline</label>
-          <div class="controls">
-            <select class="date optional" id="project_task_'+index+'_due_at_1i" name="project[task]['+index+'][due_at(1i)]">'+yearOptions+'</select>
-            <select class="date optional" id="project_task_'+index+'_due_at_2i" name="project[task]['+index+'][due_at(2i)]">'+monthOptions+'</select>
-            <select class="date optional" id="project_task_'+index+'_due_at_3i" name="project[task]['+index+'][due_at(3i)]">'+dayOptions+'</select>
-          </div>
-        </div>
-      </fieldset>'))
-
-# add email form
-$ ->
-  $('.form-inputs').on('click', '.new-email', (e) ->
-    # event hold
-    e.preventDefault()
-    e.stopPropagation()
-    $this = $(this)    
-    index = $('.email-info').length
-    $this.before(      
-      '<div class="email-info">
-        <div class="control-group string optional">
-          <label class="string optional control-label" for="email_'+index+'">Email</label>
-          <div class="controls">
-            <input id="email_'+index+'" name="email['+index+']" type="text" />
-          </div>
-        </div>
-      </div>'))
-
-

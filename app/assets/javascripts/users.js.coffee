@@ -16,9 +16,3 @@ $ ->
   else if path.match /^\/account\/edit$/ then $items.eq(1).addClass('active')
   else if path.match /^\/account\/projects\/new$/ then $items.eq(3).addClass('active')
   else if path.match /^\/account\/projects/ then $items.eq(2).addClass('active')
-
-# auto fade flash
-$ ->
-  setTimeout( ->
-    $('div.alert').fadeOut()
-  , 3000)

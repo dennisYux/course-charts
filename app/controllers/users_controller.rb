@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [:tour]
 
   def index
     authorize! :index, @user, :message => 'Not authorized as an administrator.'
@@ -17,6 +17,13 @@ class UsersController < ApplicationController
       format.html { render action: 'show' }
       format.json { render json: charts_data_for(@user) } 
     end
+  end
+
+  def tour
+    # default user
+    @user = User.find(1) 
+    sign_in @user
+    redirect_to account_path, notice: "Signed in successfully as a GUEST user !"
   end
 
   #

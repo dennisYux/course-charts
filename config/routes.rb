@@ -21,11 +21,15 @@ Boarder::Application.routes.draw do
   get '/admin(.:format)', to: 'users#index', as: :admin
   get '/account(.:format)', to: 'users#show', as: :user_root
 
+  # take a tour for demo
+  get '/account(.:format)/tour', to: 'users#tour', as: :account_tour
+
   scope 'account' do
     resources :projects do
       resource :team, only: [:create, :show]    
       resources :records, only: [:create]
     end
+    resource :submission, only: [:show]
   end
 
   #get '/about', to: 'about#index', as: :about

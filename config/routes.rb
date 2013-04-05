@@ -9,7 +9,8 @@ Boarder::Application.routes.draw do
   # once a user has successfully signed in
   # a redirection from routes /users to /account happens
   #   
-  devise_for :users, skip: [:registrations] do
+  devise_for :users, skip: [:registrations], 
+             :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
     get    '/users/sign_up(.:format)', to: 'devise::registrations#new',    as: :new_user_registration
     post   '/users(.:format)',         to: 'devise::registrations#create', as: :user_registration
     get    '/account/edit(.:format)',  to: 'devise::registrations#edit',   as: :edit_account

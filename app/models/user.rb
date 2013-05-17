@@ -3,13 +3,13 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable,
+  devise :database_authenticatable, :registerable,
+         :recoverable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook]
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :role_ids, :as => :admin
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :provider, :uid
+  attr_accessible :name, :email, :password, :password_confirmation, :provider, :uid
 
   # validations
   validates_presence_of :name
@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
   # return created_at or confirmed_at as needed
   #
   def registered_at
-    confirmed_at
+    created_at
   end
 
   #

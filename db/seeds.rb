@@ -20,12 +20,12 @@ puts 'DEFAULT USERS'
 users = {'0' => {name: 'Jack', email: 'jack@example.com', password: '12345678', password_confirmation: '12345678'},
          '1' => {name: 'Rose', email: 'rose@example.com', password: '12345678', password_confirmation: '12345678'}}
 created_at = [DateTime.new(2011,7,26,17,25,0), DateTime.new(2011,8,11,11,50,0)]
-confirmed_at = [DateTime.new(2011,7,26,17,26,0), DateTime.new(2011,8,11,11,51,0)]
+# confirmed_at = [DateTime.new(2011,7,26,17,26,0), DateTime.new(2011,8,11,11,51,0)]
 users.each do |i, u|
   user = User.find_or_create_by_name(name: u[:name], email: u[:email], password: u[:password], password_confirmation: u[:password_confirmation])
-  user.confirm!
+  # user.confirm!
   user.created_at = created_at[i.to_i]
-  user.confirmed_at = confirmed_at[i.to_i]
+  # user.confirmed_at = confirmed_at[i.to_i]
   user.save
   puts 'user: ' << user.name
 end
@@ -35,18 +35,18 @@ projects = {'0' => {name: 'CSI 5111', description: 'Software Quality Engineering
             '2' => {name: 'ELG 5100', description: 'Software Engineering Project Management', manager: 'Jack'}}
 tasks = {'0' => {name: 'inception', tag: 0}, '1' => {name: 'elaboration', tag: 1}, 
          '2' => {name: 'implementation', tag: 2}, '3' => {name: 'production', tag: 3}}
-created_at = [DateTime.new(2011,9,25,10,0,0), DateTime.new(2011,10,4,14,30,0), DateTime.new(2013,2,1,21,15,0)]
-due_at = [DateTime.new(2011,12,15,0,0,0), DateTime.new(2011,12,10,0,0,0), DateTime.new(2013,5,1,0,0,0)]
+created_at = [DateTime.new(2011,9,25,10,0,0), DateTime.new(2011,10,4,14,30,0), DateTime.new(2013,4,1,21,15,0)]
+due_at = [DateTime.new(2011,12,15,0,0,0), DateTime.new(2011,12,10,0,0,0), DateTime.new(2013,9,1,0,0,0)]
 tasks_created_at = []
 tasks_due_at = []
-tasks_created_at << [DateTime.new(2011,9,27,16,25,0), DateTime.new(2011,10,4,21,30,0), DateTime.new(2013,2,5,13,35,0)]
-tasks_due_at << [DateTime.new(2011,10,15,0,0,0), DateTime.new(2011,10,21,0,0,0), DateTime.new(2013,2,20,0,0,0)]
-tasks_created_at << [DateTime.new(2011,10,2,11,55,0), DateTime.new(2011,10,18,1,30,0), DateTime.new(2013,2,22,23,35,0)]
-tasks_due_at << [DateTime.new(2011,11,15,0,0,0), DateTime.new(2011,11,1,0,0,0), DateTime.new(2013,3,10,0,0,0)]
-tasks_created_at << [DateTime.new(2011,11,17,8,45,0), DateTime.new(2011,11,4,22,35,0), DateTime.new(2013,3,5,22,15,0)]
-tasks_due_at << [DateTime.new(2011,11,30,0,0,0), DateTime.new(2011,12,1,0,0,0), DateTime.new(2013,4,5,0,0,0)]
-tasks_created_at << [DateTime.new(2011,11,27,13,25,0), DateTime.new(2011,11,27,20,10,0), DateTime.new(2013,3,28,11,55,0)]
-tasks_due_at << [DateTime.new(2011,12,15,0,0,0), DateTime.new(2011,12,10,0,0,0), DateTime.new(2013,5,1,0,0,0)]
+tasks_created_at << [DateTime.new(2011,9,27,16,25,0), DateTime.new(2011,10,4,21,30,0), DateTime.new(2013,4,1,13,35,0)]
+tasks_due_at << [DateTime.new(2011,10,15,0,0,0), DateTime.new(2011,10,21,0,0,0), DateTime.new(2013,5,20,0,0,0)]
+tasks_created_at << [DateTime.new(2011,10,2,11,55,0), DateTime.new(2011,10,18,1,30,0), DateTime.new(2013,5,22,23,35,0)]
+tasks_due_at << [DateTime.new(2011,11,15,0,0,0), DateTime.new(2011,11,1,0,0,0), DateTime.new(2013,7,10,0,0,0)]
+tasks_created_at << [DateTime.new(2011,11,17,8,45,0), DateTime.new(2011,11,4,22,35,0), DateTime.new(2013,7,5,22,15,0)]
+tasks_due_at << [DateTime.new(2011,11,30,0,0,0), DateTime.new(2011,12,1,0,0,0), DateTime.new(2013,8,5,0,0,0)]
+tasks_created_at << [DateTime.new(2011,11,27,13,25,0), DateTime.new(2011,11,27,20,10,0), DateTime.new(2013,7,28,11,55,0)]
+tasks_due_at << [DateTime.new(2011,12,15,0,0,0), DateTime.new(2011,12,10,0,0,0), DateTime.new(2013,9,1,0,0,0)]
 projects.each do |i, p|
   project = Project.find_or_create_by_name(name: p[:name], description: p[:description], manager: p[:manager], due_at: DateTime.new(2013,1,1))
   project.created_at = created_at[i.to_i]
